@@ -1,0 +1,6 @@
+[submodule "Components/Component-Controller/MWPhotoBrowser"]
+	path = Components/Component-Controller/MWPhotoBrowser
+	url = https://github.com/mwaterfall/MWPhotoBrowser.git
+[submodule "Core/Core-3PP/CocoaAsyncSocket"]
+	path = Core/Core-3PP/CocoaAsyncSocket
+	url = https://github.com/robbiehanson/CocoaAsyncSocket.git
