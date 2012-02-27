@@ -1,0 +1,87 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 74FB7BC610178213001B5CB9 /* CommandLineTests */;
+		activeTarget = 7461B52D0F94FAF800A0C422 /* ProtocolBuffers */;
+		codeSenseManager = 74FB7BDD1017821A001B5CB9 /* Code sense */;
+		executables = (
+			74FB7BC610178213001B5CB9 /* CommandLineTests */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 269976084;
+			PBXWorkspaceStateSaveDate = 269976084;
+		};
+		sourceControlManager = 74FB7BDC1017821A001B5CB9 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	7401C1A70F950347006D8281 /* UnitTests */ = {
+		activeExec = 0;
+	};
+	7461B52D0F94FAF800A0C422 /* ProtocolBuffers */ = {
+		activeExec = 0;
+	};
+	748F14570FD75E3B000858A9 /* CommandLineTests */ = {
+		activeExec = 0;
+		executables = (
+			74FB7BC610178213001B5CB9 /* CommandLineTests */,
+		);
+	};
+	74FB7BC610178213001B5CB9 /* CommandLineTests */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CommandLineTests;
+		sourceDirectories = (
+		);
+	};
+	74FB7BDC1017821A001B5CB9 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	74FB7BDD1017821A001B5CB9 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}
