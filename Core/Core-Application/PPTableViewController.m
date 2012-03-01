@@ -655,6 +655,7 @@
     NSLog(@"select more row, default implementation");
 }
 
+/* just for copy purpose
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     if ([self isMoreRowIndexPath:indexPath]){
@@ -739,7 +740,7 @@
 	}
 	
 }
-
+*/
 
 
 
