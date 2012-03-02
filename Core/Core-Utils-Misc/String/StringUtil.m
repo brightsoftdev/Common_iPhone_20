@@ -384,7 +384,7 @@ BOOL NSStringIsValidPhone(NSString *checkString)
 
 + (NSString*)UTF8_To_GB2312:(NSString*)utf8string
 {
-    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_2312_80);
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     NSData* gb2312data = [utf8string dataUsingEncoding:encoding];
     return [[[NSString alloc] initWithData:gb2312data encoding:encoding] autorelease];
 }
