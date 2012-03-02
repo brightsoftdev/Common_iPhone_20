@@ -382,10 +382,10 @@ BOOL NSStringIsValidPhone(NSString *checkString)
     return returnString;
 }
 
-+ (NSString*)UTF8_To_GB2312:(NSString*)utf8string
+- (NSString*)UTF8_To_GB2312
 {
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSData* gb2312data = [utf8string dataUsingEncoding:encoding];
+    NSData* gb2312data = [self dataUsingEncoding:encoding];
     return [[[NSString alloc] initWithData:gb2312data encoding:encoding] autorelease];
 }
 

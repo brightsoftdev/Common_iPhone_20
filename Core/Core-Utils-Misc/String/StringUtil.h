@@ -52,7 +52,7 @@
 
 - (BOOL)isMobileInChina;
 
-+ (NSString*)UTF8_To_GB2312:(NSString*)utf8string;
+- (NSString*)UTF8_To_GB2312;
 
 @end
 
