@@ -381,6 +381,15 @@ BOOL NSStringIsValidPhone(NSString *checkString)
         returnString = [stringFloat substringToIndex:i+1]; 
     return returnString;
 }
+
++ (NSString*)UTF8_To_GB2312:(NSString*)utf8string
+{
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_2312_80);
+    NSData* gb2312data = [utf8string dataUsingEncoding:encoding];
+    return [[[NSString alloc] initWithData:gb2312data encoding:encoding] autorelease];
+}
+
+
 @end
 
 //return [retArray sortedArrayUsingComparator:^(id obj1, id obj2) {					

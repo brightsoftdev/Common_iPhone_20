@@ -52,6 +52,8 @@
 
 - (BOOL)isMobileInChina;
 
++ (NSString*)UTF8_To_GB2312:(NSString*)utf8string;
+
 @end
 
 extern BOOL NSStringIsValidEmail(NSString *checkString);
