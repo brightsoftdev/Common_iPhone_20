@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol CommonManagerProtocol <NSObject>
+
++ (id)defaultManager;
+
+@end
+
 
 @interface CommonService : NSObject {
     dispatch_queue_t  workingQueue;

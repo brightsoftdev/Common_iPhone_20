@@ -386,7 +386,7 @@ BOOL NSStringIsValidPhone(NSString *checkString)
 {
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     NSData* gb2312data = [self dataUsingEncoding:encoding];
-    return [[[NSString alloc] initWithData:gb2312data encoding:encoding] autorelease];
+    return [[[NSString alloc] initWithData:gb2312data encoding:encoding] autorelease];    
 }
 
 
