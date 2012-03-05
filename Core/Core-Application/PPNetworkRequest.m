@@ -59,7 +59,6 @@
 
 @implementation PPNetworkRequest
 
-#define NETWORK_TIMEOUT (30)        // 30 seconds
 #define UPLOAD_TIMEOUT  (120)       // 120 seconds
 
 + (CommonNetworkOutput*)uploadRequest:(NSString *)baseURL 
