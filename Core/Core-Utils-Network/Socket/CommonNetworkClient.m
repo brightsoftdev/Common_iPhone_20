@@ -56,7 +56,7 @@
     }
     
     dispatch_async(self.workingQueue, ^{
-        int TAG_BOTH = 3;
+//        int TAG_BOTH = 3;
         
         int len = [data length];    
         uint32_t netInt = CFSwapInt32HostToBig(len);    
