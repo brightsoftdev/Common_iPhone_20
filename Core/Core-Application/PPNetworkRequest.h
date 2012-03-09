@@ -30,6 +30,7 @@ enum {
     NSArray*        jsonDataArray;
     NSDictionary*   jsonDataDict;
     NSString*       textData;
+    NSData*         responseData;
 }
 
 @property (nonatomic, assign) int			resultCode;
@@ -40,6 +41,8 @@ enum {
 // for football project
 @property (nonatomic, retain) NSString*       textData;
 @property (nonatomic, retain) NSArray*        arrayData;
+
+@property (nonatomic, retain) NSData*         responseData;
 
 - (void)resultFromJSON:(NSString*)jsonString;
 - (NSDictionary*)dictionaryDataFromJSON:(NSString*)jsonString;

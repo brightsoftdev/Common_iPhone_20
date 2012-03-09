@@ -10,6 +10,13 @@
 
 @class PPTableViewController;
 
+@protocol PPTableViewCellProtocol <NSObject>
+
++ (NSString*)getCellIdentifier;
++ (CGFloat)getCellHeight;
+
+@end
+
 @interface PPTableViewCell : UITableViewCell {
     NSIndexPath *indexPath;    
     id delegate;
@@ -18,7 +25,7 @@
 }
 
 // copy and override three methods below
-+ (PPTableViewCell*)createCell:(id)delegate;
++ (id)createCell:(id)delegate;
 + (NSString*)getCellIdentifier;
 + (CGFloat)getCellHeight;
 

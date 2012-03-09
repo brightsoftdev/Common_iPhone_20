@@ -17,6 +17,7 @@
 @implementation CommonNetworkOutput
 
 @synthesize resultMessage, resultCode, jsonDataArray, jsonDataDict, textData, arrayData;
+@synthesize responseData;
 
 - (void)resultFromJSON:(NSString*)jsonString
 {
@@ -51,6 +52,7 @@
 	[resultMessage release];
     [jsonDataArray release];
     [jsonDataDict release];
+    [responseData release];
 	[super dealloc];
 }
 

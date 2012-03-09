@@ -53,7 +53,7 @@
         for(NSInteger i=0; i<[subViews count]; i++)
         {
             UIImageView *dot = [subViews objectAtIndex:i];
-            dot.image = self.currentPage == i ? imagePageStateNormal : imagePageStateHighted;
+            dot.image = self.currentPage == i ? imagePageStateHighted : imagePageStateNormal;
         }
     }
 }

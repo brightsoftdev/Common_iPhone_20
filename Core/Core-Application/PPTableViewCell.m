@@ -51,18 +51,20 @@
 }
 
 // just replace PPTableViewCell by the new Cell Class Name
-+ (PPTableViewCell*)createCell:(id)delegate
++ (id)createCell:(id)delegate
 {
-    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PPTableViewCell" owner:self options:nil];
+    NSString* cellId = [self getCellIdentifier];
+    NSLog(@"cellId = %@", cellId);
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellId owner:self options:nil];
     // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
     if (topLevelObjects == nil || [topLevelObjects count] <= 0){
-        NSLog(@"create <PPTableViewCell> but cannot find cell object from Nib");
+        NSLog(@"create %@ but cannot find cell object from Nib", cellId);
         return nil;
     }
     
     ((PPTableViewCell*)[topLevelObjects objectAtIndex:0]).delegate = delegate;
     
-    return (PPTableViewCell*)[topLevelObjects objectAtIndex:0];
+    return [topLevelObjects objectAtIndex:0];
 }
 
 + (NSString*)getCellIdentifier
