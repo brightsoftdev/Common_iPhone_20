@@ -1,6 +1,8 @@
 
-一、如何引入Core
 
+特别注意：目前AsyncSocket只能支持 Apple LLVM Compiler 3.0，不能使用4.2 ！！！
+
+一、如何引入Core
 
 1）添加Core目录到工程中
 
