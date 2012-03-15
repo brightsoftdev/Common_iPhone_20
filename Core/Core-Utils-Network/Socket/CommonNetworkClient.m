@@ -124,6 +124,11 @@
 
         [self stopReconnectTimer];
         
+        // close socket firstly
+        [self.asyncSocket setDelegate:nil delegateQueue:NULL];        
+        [self.asyncSocket disconnect];
+        self.asyncSocket = nil;
+        
         self.serverHost = host;
         self.serverPort = port;        
         self.asyncSocket = [[[GCDAsyncSocket alloc] initWithDelegate:self 
@@ -146,6 +151,8 @@
         
         NSLog(@"<disconnect>");
         if (asyncSocket){
+            [asyncSocket.socketFD
+            [asyncSocket setDelegate:nil delegateQueue:NULL];
             [asyncSocket disconnect];
             self.asyncSocket = nil;
         }
@@ -164,6 +171,8 @@
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     NSLog(@"<socketDidDisconnect> error = %@", [err description]);
+    [self.asyncSocket setDelegate:nil delegateQueue:NULL];
+    [self.asyncSocket disconnect];
     self.asyncSocket = nil;
     
     if (err != nil){
