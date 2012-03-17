@@ -151,7 +151,6 @@
         
         NSLog(@"<disconnect>");
         if (asyncSocket){
-            [asyncSocket.socketFD
             [asyncSocket setDelegate:nil delegateQueue:NULL];
             [asyncSocket disconnect];
             self.asyncSocket = nil;
