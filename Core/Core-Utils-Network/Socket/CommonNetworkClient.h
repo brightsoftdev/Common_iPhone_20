@@ -39,6 +39,8 @@
 - (void)disconnect;
 - (BOOL)sendData:(NSData*)data;
 
+- (BOOL)isConnected;
+
 // method for override
 - (void)handleData:(NSData*)data;
 

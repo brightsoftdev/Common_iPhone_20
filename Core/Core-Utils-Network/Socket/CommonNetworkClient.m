@@ -36,6 +36,11 @@
     [super dealloc];
 }
 
+- (BOOL)isConnected
+{
+    return [asyncSocket isConnected];
+}
+
 - (void)handleData:(NSData*)data
 {
     NSLog(@"Handle Data But Do Nothing, You Must Override this method!");
