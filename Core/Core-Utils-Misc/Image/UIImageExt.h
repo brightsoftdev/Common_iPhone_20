@@ -14,4 +14,6 @@
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize;
 + (id) createRoundedRectImage:(UIImage*)image size:(CGSize)size;
 - (NSData*)getData;
+- (NSData*)data;
+
 @end
