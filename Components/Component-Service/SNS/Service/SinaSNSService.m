@@ -108,7 +108,7 @@ static SinaSNSService* _defaultSinaService;
             [_displayViewController hideActivity];
             PPDebug(@"SNS Login Result = %d", finalResult);
             if ([_displayViewController respondsToSelector:@selector(didLogin:userInfo:)]){
-                [_displayViewController didLogin:finalResult userInfo:(NSDictionary*)userInfo];
+                [_displayViewController didLogin:(finalResult ? 0 : 1) userInfo:(NSDictionary*)userInfo];
             }
         });            
     });    
