@@ -50,9 +50,7 @@
     webView.frame = WEB_VIEW_FRAME;
     webView.backgroundColor = [UIColor clearColor];
     
-    [self setGroupBuyNavigationBackButton];
-    [self setBackgroundImageName:@"background.png"];
-    [self setGroupBuyNavigationTitle:@"微博授权"];
+    self.navigationItem.title = @"微博授权";
 }
 
 - (void)viewDidLoad
