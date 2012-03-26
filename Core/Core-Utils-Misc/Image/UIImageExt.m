@@ -133,4 +133,9 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
 	return data;
 }
 
+- (NSData*)data
+{
+    return [self getData];
+}
+
 @end
