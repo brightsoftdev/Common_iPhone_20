@@ -801,7 +801,9 @@
         picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
         picker.allowsEditing = YES;
         picker.delegate = self;
-        [self presentModalViewController:picker animated:YES];        
+        [self presentModalViewController:picker animated:YES];
+        [picker release];
+
     }
      
 }
@@ -814,7 +816,8 @@
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         picker.allowsEditing = YES;
         picker.delegate = self;
-        [self presentModalViewController:picker animated:YES];        
+        [self presentModalViewController:picker animated:YES];  
+        [picker release];
     }
     
 }

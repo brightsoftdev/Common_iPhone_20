@@ -12,7 +12,7 @@
 @interface UITableViewCell (UITableViewCellUtil) 
 
 - (void)setBlueBlackBackground:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
-- (void)addCheckAndDetailView:(id)delegate;
+//- (void)addCheckAndDetailView:(id)delegate;
 //- (UICheckAndDetailView*)getCheckAndDetailView;
 - (void)setBackgroundImage:(UIImage*)image;
 - (void)setBackgroundImageByName:(NSString*)imageName;

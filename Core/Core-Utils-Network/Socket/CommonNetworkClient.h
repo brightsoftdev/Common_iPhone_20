@@ -27,8 +27,8 @@
 
 @property (nonatomic, retain) GCDAsyncSocket *asyncSocket;
 @property (nonatomic, copy)   NSString *serverHost;
-@property (atomic, retain)    NSTimer *reconnectTimer;
-@property (atomic, assign)    BOOL needReconnect;
+@property (nonatomic, retain) NSTimer *reconnectTimer;
+@property (nonatomic, assign) BOOL needReconnect;
 @property (nonatomic, assign) int serverPort;
 @property (nonatomic, assign) dispatch_queue_t workingQueue;
 @property (nonatomic, assign) id<CommonNetworkClientDelegate> delegate;
@@ -38,6 +38,8 @@
 - (void)connect:(NSString*)host port:(int)port autoReconnect:(BOOL)autoReconnect;
 - (void)disconnect;
 - (BOOL)sendData:(NSData*)data;
+
+- (BOOL)isConnected;
 
 // method for override
 - (void)handleData:(NSData*)data;
