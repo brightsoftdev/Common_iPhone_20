@@ -50,4 +50,10 @@
                          removeCompeleted:(BOOL)removedOnCompletion;
 + (CAAnimation *)shakeFor:(CGFloat)margin originX:(CGFloat)orginX times:(int)times duration:(CFTimeInterval)duration;
 + (CAAnimation *)view:(UIView*)view shakeFor:(CGFloat)margin times:(int)times duration:(CFTimeInterval)duration;
+
++ (void)popUpView:(UIView *)view 
+     fromPosition:(CGPoint)fromPosition 
+       toPosition:(CGPoint)toPosition
+         interval:(NSTimeInterval)interval
+         delegate:(id)delegate;
 @end
