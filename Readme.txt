@@ -19,6 +19,7 @@ MessageUI
 AVFoundation
 libz.1.1.3.dylib
 MobileCoreService
+StoreKit
 
 3）添加第三方依赖库
 
