@@ -115,8 +115,11 @@ static SinaSNSService* _defaultSinaService;
 }
 
 - (void)publishWeibo:(NSString*)text delegate:(id<SNSServiceDelegate>)delegate
-{
-    
+{    
+    dispatch_async(workingQueue, ^{
+        int result = [self sendText:text snsRequest:_request];
+        
+    });
 }
 
 @end
