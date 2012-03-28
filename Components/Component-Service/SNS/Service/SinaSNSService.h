@@ -23,6 +23,7 @@
 
 - (void)startLogin:(PPViewController*)viewController;
 - (void)setAppKey: (NSString *)key Secret:(NSString *)secret;
+- (void)publishWeibo:(NSString*)text delegate:(id<SNSServiceDelegate>)delegate;
 + (SinaSNSService*)defaultService;
 
 @end

@@ -127,4 +127,9 @@ static QQWeiboService* _defaultSinaService;
     });    
 }
 
+- (void)publishWeibo:(NSString*)text delegate:(id<SNSServiceDelegate>)delegate
+{
+    
+}
+
 @end
