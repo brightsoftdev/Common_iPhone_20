@@ -46,7 +46,7 @@ static CoreDataManager* _defaultDataManager;
         _defaultDataManager = [[CoreDataManager alloc] initWithDBName:@"AppDB" dataModelName:nil];
     }
     
-	return GlobalGetCoreDataManager();
+	return _defaultDataManager;
 }
 
 - (id)init
