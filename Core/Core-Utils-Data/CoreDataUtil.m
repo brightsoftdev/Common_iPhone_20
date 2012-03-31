@@ -16,23 +16,36 @@
 
 CoreDataManager* GlobalGetCoreDataManager()
 {
-	NSObject* appDelegate = [[UIApplication sharedApplication] delegate];
-	if ([appDelegate respondsToSelector:@selector(dataManager)])
-		return [appDelegate performSelector:@selector(dataManager)];
-	else{
-		PPDebug(@"[ERROR] Cannot find data manager in GlobalGetCoreDataManager");
-		return nil;
-	}
+//	NSObject* appDelegate = [[UIApplication sharedApplication] delegate];
+//	if ([appDelegate respondsToSelector:@selector(dataManager)])
+//		return [appDelegate performSelector:@selector(dataManager)];
+//	else{
+//		PPDebug(@"[ERROR] Cannot find data manager in GlobalGetCoreDataManager");
+//		return nil;
+//	}
+    
+    return [CoreDataManager dataManager];
 }
 
 @implementation CoreDataManager
+
+static CoreDataManager* _defaultDataManager;
 
 @synthesize dbName;
 @synthesize dbWorkingQueue;
 @synthesize dataModelName;
 
++ (id)defaultManager
+{
+    return [CoreDataManager dataManager];
+}
+
 + (id)dataManager
 {
+    if (_defaultDataManager == nil){
+        _defaultDataManager = [[CoreDataManager alloc] initWithDBName:@"AppDB" dataModelName:nil];
+    }
+    
 	return GlobalGetCoreDataManager();
 }
 

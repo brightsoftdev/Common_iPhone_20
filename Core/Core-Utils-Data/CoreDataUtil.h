@@ -28,6 +28,7 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, assign, readonly) dispatch_queue_t dbWorkingQueue;
 
++ (id)defaultManager;
 + (id)dataManager;
 - (id)initWithDBName:(NSString*)name dataModelName:(NSString*)dmName;
 - (id)initWithDBName:(NSString*)name dataModelName:(NSString*)dmName hasWorkingQueue:(BOOL)hasWorkingQueue sharePersisitentStore:(NSPersistentStoreCoordinator*)sharePersisitentStore;
