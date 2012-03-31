@@ -157,7 +157,7 @@
         NSLog(@"<disconnect>");
         if (asyncSocket){
             [asyncSocket setDelegate:nil delegateQueue:NULL];
-            [asyncSocket disconnect];
+            [asyncSocket disconnectAfterReadingAndWriting];
             self.asyncSocket = nil;
         }
     });

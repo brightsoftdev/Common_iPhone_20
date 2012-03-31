@@ -9,7 +9,7 @@
 #import "TimeUtils.h"
 NSArray *weekDays = nil; 
 
-NSArray *getWeekDayArray()
+static NSArray *getWeekDayArray()
 {
     if(weekDays == nil)
     {
@@ -22,7 +22,7 @@ NSArray *getWeekDayArray()
 
 
 NSDateFormatter *dateFormatter = nil;
-NSDateFormatter *getDateFormatter()
+static NSDateFormatter *getDateFormatter()
 {
     @synchronized(dateFormatter){
         if (dateFormatter == nil) {
@@ -41,7 +41,7 @@ NSDateComponents *getDateComponents(NSDate *date)
 	return comps;
 }
 
-NSDateComponents *getChineseDateComponents(NSDate *date)
+static NSDateComponents *getChineseDateComponents(NSDate *date)
 {
 	NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar] autorelease];	
 	unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit;
@@ -256,7 +256,7 @@ NSDate *previousDate(NSDate *date)
 	
 }
 
-NSDate *nextNDate(NSDate *date, NSInteger interval)
+static NSDate *nextNDate(NSDate *date, NSInteger interval)
 {
 	return [[[NSDate alloc] initWithTimeInterval:24*3600*interval sinceDate:date] autorelease];
 	
