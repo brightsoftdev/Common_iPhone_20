@@ -49,6 +49,14 @@ static NSDateComponents *getChineseDateComponents(NSDate *date)
 	return comps;
 }
 
+static NSDateComponents *getLocalDateComponents(NSDate *date)
+{
+	NSCalendar *calendar = [NSCalendar currentCalendar];	
+	unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit;
+	NSDateComponents *comps = [calendar components:unitFlags fromDate:date];	
+	return comps;
+}
+
 // return whether given date and today is the same day
 BOOL isToday(NSDate *date)
 {
@@ -68,6 +76,27 @@ BOOL isToday(NSDate *date)
 		return NO;
 	}
 
+}
+
+// return whether given date and today is the same day
+BOOL isLocalToday(NSDate *date)
+{
+	// Get Today's YYYY-MM-DD
+	NSDateComponents *today_comps = getLocalDateComponents([NSDate date]);
+	
+	// Given Date's YYYY-MM-DD
+	NSDateComponents *select_comps = getLocalDateComponents(date);		
+	
+	// if it's today, return TODAY
+	if ( [today_comps year] == [select_comps year] &&
+		[today_comps month] == [select_comps month] &&
+		[today_comps day] == [select_comps day]){		
+		return YES;
+	}
+	else {
+		return NO;
+	}
+    
 }
 
 BOOL isChineseToday(NSDate *date)
