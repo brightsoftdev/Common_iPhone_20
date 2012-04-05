@@ -154,7 +154,6 @@ static SinaSNSService* _defaultSinaService;
 - (void)getUserInfo
 {    
     [_displayViewController showActivityWithText:NSLS(@"请求授权中...")];
-
     _action = ACTION_GET_USER_INFO;    
     [_engine loadRequestWithMethodName:@"users/show.json" 
                             httpMethod:@"GET" 
