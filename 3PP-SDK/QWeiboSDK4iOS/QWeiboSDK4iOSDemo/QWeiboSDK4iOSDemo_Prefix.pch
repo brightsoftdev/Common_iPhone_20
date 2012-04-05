@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'QWeiboSDK4iOSDemo' target in the 'QWeiboSDK4iOSDemo' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
