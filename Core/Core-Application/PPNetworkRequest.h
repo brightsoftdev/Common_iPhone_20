@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define NETWORK_TIMEOUT 30      // 30 seconds for time out
+#define NETWORK_TIMEOUT 20      // 30 seconds for time out
 
 enum {
     
