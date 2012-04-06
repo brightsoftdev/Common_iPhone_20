@@ -113,7 +113,7 @@ static FacebookSNSService* _defaultService;
 {        
     self.displayViewController = viewController;
     
-    [_facebook authorize:nil];
+    [_facebook authorize:[NSArray arrayWithObjects:@"publish_actions", @"publish_stream", nil]];
 
     _action = ACTION_GET_USER_INFO;    
     _needGetUserInfo = YES;
@@ -121,11 +121,66 @@ static FacebookSNSService* _defaultService;
 
 - (void)publishWeibo:(NSString*)text delegate:(id<SNSServiceDelegate>)delegate
 {
+    PPDebug(@"<publishWeibo> text = %@", text);
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   text, @"message",
+                                   nil];
     
+    [[self facebook] requestWithGraphPath:@"me/feed"
+                                andParams:params
+                            andHttpMethod:@"POST"
+                              andDelegate:self];
 }
 
 - (void)publishWeibo:(NSString*)text imageFilePath:(NSString*)imageFilePath delegate:(id<SNSServiceDelegate>)delegate
+{    
+    dispatch_async(workingQueue, ^{
+        // read image file
+        NSData* data = [NSData dataWithContentsOfFile:imageFilePath];    
+        if (data == nil){
+            PPDebug(@"<publishWeibo> but data is nil for %@", imageFilePath);
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           text, @"message",
+                                           data, @"source",
+                                           nil];
+            
+            [[self facebook] requestWithGraphPath:@"me/photos"
+                                        andParams:params
+                                    andHttpMethod:@"POST"
+                                      andDelegate:self];
+        });
+    });
+}
+
+- (void)testPublishPhoto
 {
+    NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/images/devsite/iphone_connect_btn.jpg"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"Facebook API Test", @"message",
+                                   data, @"source",
+                                   nil];
+    
+    [[self facebook] requestWithGraphPath:@"me/photos"
+                                    andParams:params
+                                andHttpMethod:@"POST"
+                                  andDelegate:self];
+}
+
+- (void)testPublishText
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"Facebook API Test Text Post", @"message",
+                                   nil];
+    
+    [[self facebook] requestWithGraphPath:@"me/feed"
+                                andParams:params
+                            andHttpMethod:@"POST"
+                              andDelegate:self];
     
 }
 
@@ -134,7 +189,7 @@ static FacebookSNSService* _defaultService;
     // and since the minimum profile picture size is 180 pixels wide we should be able
     // to get a 100 pixel wide version of the profile picture
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"SELECT uid, name, pic, first_name FROM user WHERE uid=me()", @"query",
+                                   @"SELECT uid, name, sex, pic, first_name FROM user WHERE uid=me()", @"query",
                                    nil];
     [_facebook requestWithMethodName:@"fql.query"
                                      andParams:params
@@ -260,6 +315,21 @@ static FacebookSNSService* _defaultService;
     [self safeSetKeyFrom:origUserInfo toDict:retDict fromKey:@"first_name" toKey:SNS_NICK_NAME];
     [self safeSetKeyFrom:origUserInfo toDict:retDict fromKey:@"pic" toKey:SNS_USER_IMAGE_URL];
     
+    NSString* sex = [origUserInfo objectForKey:@"sex"];
+    if ([sex length] > 0){
+        NSString* value = nil;
+        if ([sex isEqualToString:@"male"]){
+            value = @"m";
+        }
+        else if ([sex isEqualToString:@"female"]){
+            value = @"f";
+        }
+        
+        if (value){
+            [retDict setObject:value forKey:SNS_GENDER];
+        }
+    }
+    
     return retDict;
 }
 
@@ -278,8 +348,12 @@ static FacebookSNSService* _defaultService;
             if ([_displayViewController respondsToSelector:@selector(didLogin:userInfo:)]){
                 [_displayViewController didLogin:0 userInfo:userInfo];
             }            
+            
+            [self test];
         }
     }
+    
+    
     
 
     // This callback can be a result of getting the user's basic

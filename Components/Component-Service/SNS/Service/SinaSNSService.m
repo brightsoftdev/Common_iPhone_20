@@ -227,6 +227,20 @@ static SinaSNSService* _defaultSinaService;
 {
     PPDebug(@"<requestDidFailWithError> error=%@", [error description]);
     [_displayViewController hideActivity];
+    
+    if (ACTION_GET_USER_INFO == _action){
+        NSString* nickName = [NSString stringWithFormat:@"新浪微博%@", [_engine userID]];
+        NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+        
+        [userInfo setObject:[_engine userID] forKey:SNS_USER_ID];
+        [userInfo setObject:nickName forKey:SNS_NICK_NAME];
+        [userInfo setObject:SNS_SINA_WEIBO forKey:SNS_NETWORK];
+        
+        if ([_displayViewController respondsToSelector:@selector(didLogin:userInfo:)]){
+            [_displayViewController didLogin:0 userInfo:userInfo];
+        }        
+        _action = ACTION_NONE;
+    }
 }
 
 - (void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result
