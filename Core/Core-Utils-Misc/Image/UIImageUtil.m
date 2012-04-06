@@ -141,4 +141,21 @@
     NSData *tempData = UIImageJPEGRepresentation(image, quality);
     return tempData;
 }
+
++ (NSData *)compressImage:(UIImage *)image byQuality:(float)quality{
+    int compressQuality;
+    if (quality > 1 || quality < 0) {
+        compressQuality = 1.0;
+    }
+    NSData *data = UIImageJPEGRepresentation(image,compressQuality);
+    int length = [data length];
+    if (length <= IMAGE_POST_MAX_BYTE) {
+        return data;
+    }
+    CGFloat aQuality = IMAGE_POST_MAX_BYTE/(CGFloat)length;
+    NSData *tempData = UIImageJPEGRepresentation(image, aQuality);
+    return tempData;
+
+}
+
 @end

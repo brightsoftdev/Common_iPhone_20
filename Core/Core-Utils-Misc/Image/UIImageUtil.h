@@ -13,7 +13,7 @@
 - (BOOL)saveImageToFile:(NSString*)fileName;
 + (CGRect)shrinkFromOrigRect:(CGRect)origRect imageSize:(CGSize)imageSize;
 + (NSData *)compressImage:(UIImage *)image;
-
++ (NSData *)compressImage:(UIImage *)image byQuality:(float)quality;
 
 + (UIImage*)strectchableImageName:(NSString*)name;
 + (UIImage*)strectchableTopImageName:(NSString*)name;
