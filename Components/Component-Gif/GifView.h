@@ -17,5 +17,6 @@
 	size_t count;
 	NSTimer *timer;
 }
-- (id)initWithFrame:(CGRect)frame filePath:(NSString *)_filePath;
+@property (assign, nonatomic) float playTimeInterval;
+- (id)initWithFrame:(CGRect)frame filePath:(NSString *)_filePath playTimeInterval:(float)timeInterval;
 @end

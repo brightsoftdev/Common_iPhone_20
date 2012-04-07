@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ANGifEncoder.h"
+#import "ANCutColorTable.h"
+#import "ANGifNetscapeAppExtension.h"
+#import "ANImageBitmapRep.h"
+#import "UIImagePixelSource.h"
 
 @interface GifManager : NSObject
+
++ (void)createGifToPath:(NSString*)filePath byImages:(NSArray*)images;
 
 @end
