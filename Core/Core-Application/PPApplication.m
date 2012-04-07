@@ -348,7 +348,7 @@ if (nil != payload) {
 
 - (void)askToDownloadNewVersion:(NSString*)newVersionId newVersionInfo:(NSString*)newVersionInfo newVersionUrl:(NSString*)newVersionUrl
 {
-    NSString* message = [NSString stringWithFormat:NSLS(@"kNewVersionMessage"), newVersionId, newVersionInfo];
+    NSString* message = [NSString stringWithFormat:NSLS(@"kNewVersionMessage"), newVersionId];
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLS(@"kNewVersionTitle") message:message delegate:self cancelButtonTitle:NSLS(@"Cancel") otherButtonTitles:NSLS(@"OK"), nil];
     alertView.tag = CHECK_APP_VERSION_ALERT_VIEW;
     [alertView show];
@@ -358,14 +358,19 @@ if (nil != payload) {
 - (void)checkAppVersion:(NSString*)appId
 {
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];  
-    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];    
     
-    
-    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* newVersion = [userDefaults objectForKey:KEY_APP_NEW_VERSION];
+    NSString* appUrl = [userDefaults objectForKey:KEY_APP_NEW_VERSION_URL];
+    NSString* newVersionInfo = [userDefaults objectForKey:KEY_APP_NEW_VERSION_INFO];
+    if (newVersion && appUrl){
+        [self askToDownloadNewVersion:newVersion newVersionInfo:newVersionInfo newVersionUrl:appUrl];
+        return;
+    }    
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        // FOR TEST
-        NSURL* url = [NSURL URLWithString:@"http://itunes.apple.com/lookup?id=377378452"]; 
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId]]; 
         ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:url];
         [request startSynchronous];
         NSString* responseString = [request responseString];
@@ -380,6 +385,7 @@ if (nil != payload) {
             NSString *latestVersion = [releaseInfo objectForKey:@"version"];  
             NSString *trackViewUrl = [releaseInfo objectForKey:@"trackViewUrl"];
             NSString *releaseNotes = [releaseInfo objectForKey:@"releaseNotes"];
+            NSLog(@"releaseInfo=%@", [releaseInfo description]);
             
             if ([latestVersion isEqualToString:currentVersion] == NO){
                 dispatch_async(dispatch_get_main_queue(), ^{
