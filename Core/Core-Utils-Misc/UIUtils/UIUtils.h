@@ -28,6 +28,7 @@
 + (void) sendEmail:(NSString *)phoneNumber;
 + (void) sendEmail:(NSString *)to cc:(NSString*)cc subject:(NSString*)subject body:(NSString*)body;
 + (void)openApp:(NSString*)appId;
++ (void)gotoReview:(NSString*)appId;
 + (void)openLocation:(CLLocation*)location;
 + (NSString*)getAppLink:(NSString*)appId;
 + (BOOL) canFaceTime;
