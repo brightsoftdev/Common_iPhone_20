@@ -341,7 +341,6 @@ if (nil != payload) {
 	[fileCache trimCacheUsingBackgroundThread];    
 }
 
-#define CHECK_APP_VERSION_ALERT_VIEW    9832432
 #define KEY_APP_NEW_VERSION             @"checkAppVersion_KEY_APP_NEW_VERSION"
 #define KEY_APP_NEW_VERSION_URL         @"checkAppVersion_KEY_APP_NEW_VERSION_URL"
 #define KEY_APP_NEW_VERSION_INFO        @"checkAppVersion_KEY_APP_NEW_VERSION_INFO"

@@ -19,6 +19,9 @@
 #define kAppLocationUpdateTimeOut	60.0
 #define kAppTimeOutObjectString		@"Time out"
 
+#define CHECK_APP_VERSION_ALERT_VIEW    9832432
+
+
 extern NSString* GlobalGetAppName();
 extern dispatch_queue_t GlobalGetWorkingQueue();
 extern HJObjManager* GlobalGetImageCache();
