@@ -109,7 +109,7 @@ BOOL isFree()
 
 - (void)stopUpdatingLocation:(NSString *)state {
 	
-	NSLog(@"stopUpdatingLocation,state=%@", state);
+//	NSLog(@"stopUpdatingLocation,state=%@", state);
     [locationManager stopUpdatingLocation];
     locationManager.delegate = nil;    
 }
