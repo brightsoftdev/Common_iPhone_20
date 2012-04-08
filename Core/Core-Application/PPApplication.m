@@ -11,6 +11,7 @@
 #import "ASIHTTPRequest.h"
 #import "JSON.h"
 #import "UIUtils.h"
+#import "TimeUtils.h"
 
 #pragma mark Global Methods
 
@@ -345,6 +346,7 @@ if (nil != payload) {
 #define KEY_APP_NEW_VERSION             @"checkAppVersion_KEY_APP_NEW_VERSION"
 #define KEY_APP_NEW_VERSION_URL         @"checkAppVersion_KEY_APP_NEW_VERSION_URL"
 #define KEY_APP_NEW_VERSION_INFO        @"checkAppVersion_KEY_APP_NEW_VERSION_INFO"
+#define KEY_APP_LAST_CHECK_DATE         @"checkAppVersion_KEY_APP_LAST_CHECK_DATE"
 
 - (void)openAppForUpgrade:(NSString*)appId
 {
@@ -355,11 +357,29 @@ if (nil != payload) {
 
 - (void)askToDownloadNewVersion:(NSString*)newVersionId newVersionInfo:(NSString*)newVersionInfo newVersionUrl:(NSString*)newVersionUrl
 {
+    int randValue = rand() % 2;
+    if (randValue)
+        return;
+    
     NSString* message = [NSString stringWithFormat:NSLS(@"kNewVersionMessage"), newVersionId];
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLS(@"kNewVersionTitle") message:message delegate:self cancelButtonTitle:NSLS(@"Cancel") otherButtonTitles:NSLS(@"OK"), nil];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLS(@"kNewVersionTitle") message:message delegate:self cancelButtonTitle:NSLS(@"Remind Later") otherButtonTitles:NSLS(@"Upgrade Now"), nil];
     alertView.tag = CHECK_APP_VERSION_ALERT_VIEW;
     [alertView show];
     [alertView release];
+}
+
+- (BOOL)hasCheckAppVersionToday
+{
+    NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_APP_LAST_CHECK_DATE];
+    if (date == nil)
+        return NO;
+    
+    if (isLocalToday(date)){
+        return YES;
+    }
+    else{
+        return NO;
+    }
 }
 
 - (void)checkAppVersion:(NSString*)appId
@@ -375,6 +395,12 @@ if (nil != payload) {
         [self askToDownloadNewVersion:newVersion newVersionInfo:newVersionInfo newVersionUrl:appUrl];
         return;
     }    
+    
+    if ([self hasCheckAppVersionToday]){
+        return;
+    }
+    
+    [userDefaults setObject:[NSDate date] forKey:KEY_APP_LAST_CHECK_DATE];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId]]; 
