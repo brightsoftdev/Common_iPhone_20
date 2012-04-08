@@ -81,13 +81,13 @@ static QQWeiboService* _defaultSinaService;
 {
     self.displayViewController = viewController; // save the view controller to parse reponse URL
     
-    [viewController showActivityWithText:NSLS(@"kInitiateAuthorization")];
+    [viewController showActivityWithText:NSLS(@"初始化授权请求中...")];
     dispatch_async(workingQueue, ^{        
         BOOL result = [self loginForAuthorization:snsRequest viewController:viewController];
         dispatch_async(dispatch_get_main_queue(), ^{
             [viewController hideActivity];
             if (result == NO){
-                [UIUtils alert:NSLS(@"kFailInitAuthorization")];                
+                [UIUtils alert:NSLS(@"对不起，用户授权失败")];                
             }
         });        
     });        
