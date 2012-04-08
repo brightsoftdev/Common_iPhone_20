@@ -36,14 +36,12 @@
   @throw [NSException exceptionWithName:@"ImproperSubclassing" reason:@"" userInfo:nil];
 }
 
-
 - (void) checkInitialized {
   PBGeneratedMessage* result = self.internalGetResult;
   if (result != nil && !result.isInitialized) {
     @throw [NSException exceptionWithName:@"UninitializedMessage" reason:@"" userInfo:nil];
   }
 }
-
 
 - (PBUnknownFieldSet*) unknownFields {
   return self.internalGetResult.unknownFields;

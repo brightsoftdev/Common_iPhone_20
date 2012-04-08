@@ -112,7 +112,7 @@ BOOL isFree()
 
 - (void)stopUpdatingLocation:(NSString *)state {
 	
-	NSLog(@"stopUpdatingLocation,state=%@", state);
+//	NSLog(@"stopUpdatingLocation,state=%@", state);
     [locationManager stopUpdatingLocation];
     locationManager.delegate = nil;    
 }
@@ -341,7 +341,6 @@ if (nil != payload) {
 	fileCache.fileAgeLimit = 60*60*24*7; //1 week
 	[fileCache trimCacheUsingBackgroundThread];    
 }
-
 
 #define KEY_APP_NEW_VERSION             @"checkAppVersion_KEY_APP_NEW_VERSION"
 #define KEY_APP_NEW_VERSION_URL         @"checkAppVersion_KEY_APP_NEW_VERSION_URL"
