@@ -402,7 +402,15 @@ if (nil != payload) {
     
     [userDefaults setObject:[NSDate date] forKey:KEY_APP_LAST_CHECK_DATE];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);    
+    if (queue == NULL){
+        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+        if (queue == NULL){
+            return;
+        }
+    }
+    
+    dispatch_async(queue, ^{
         NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId]]; 
         ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:url];
         [request startSynchronous];
