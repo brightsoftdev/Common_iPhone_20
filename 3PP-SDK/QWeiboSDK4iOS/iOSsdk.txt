@@ -1,0 +1,3 @@
+此 iOS SDK，由热心网友 sampan 提供。说明:1,SDK里面包含什么?SDK源码包含以下内容：QWeiboRequest.m、QOauth.m、QSyncHttp.m、QAsyncHttp.m，等等对腾讯微博开放API的简单封装; 同时,在QWeiboSDK4iOSDemo中提供了示例代码。
+
+2,如何使用该SDK?（1）打开QWeiboSDK4iOS工程,编译生成.a静态库, 将静态库和头文件路径等添加到你的工程中（2）在你的代码中import相应的头文件（3）使用QWeiboRequest类来发起请求，包括oauth登录请求及其它功能请求。支持同步和异步请求。

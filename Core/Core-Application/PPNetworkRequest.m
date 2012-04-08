@@ -163,6 +163,9 @@
         output.resultCode = ERROR_NETWORK;
     }
     else if (statusCode != 200){
+        if (statusCode == 0){
+            statusCode = ERROR_NETWORK;
+        }        
         output.resultCode = statusCode;
     }
     else{

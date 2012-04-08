@@ -20,6 +20,8 @@ BOOL isToday(NSDate *date);
 
 BOOL isChineseToday(NSDate *date);
 
+BOOL isLocalToday(NSDate *date);
+
 NSString *dateToLocaleString(NSDate *date);
 
 NSString *dateToString(NSDate *date);

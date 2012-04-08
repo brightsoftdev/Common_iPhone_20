@@ -21,11 +21,22 @@
 
 + (NSString *)getLanguageCode
 {
-	NSLocale *currentLocale = [NSLocale currentLocale];
-	
-	NSLog(@"Language Code is %@", [currentLocale objectForKey:NSLocaleLanguageCode]);	
-	
-	return [currentLocale objectForKey:NSLocaleLanguageCode];
+//	NSLocale *currentLocale = [NSLocale currentLocale];
+//	
+//	NSLog(@"Language Code is %@", [currentLocale objectForKey:NSLocaleLanguageCode]);	
+//	
+//	return [currentLocale objectForKey:NSLocaleLanguageCode];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+	NSLog(@"Language Code is %@", currentLanguage);	
+    return currentLanguage;
+}
+
++ (BOOL)isChinese
+{
+    return [[self getLanguageCode] hasPrefix:@"zh-Han"];
 }
 
 + (BOOL)isChina

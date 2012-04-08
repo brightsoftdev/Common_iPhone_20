@@ -141,4 +141,14 @@
     NSData *tempData = UIImageJPEGRepresentation(image, quality);
     return tempData;
 }
+
++ (NSData *)compressImage:(UIImage *)image byQuality:(float)quality{
+    float compressQuality = quality;
+    NSData *originData = UIImageJPEGRepresentation(image, 1.0);
+    NSData *tempData = UIImageJPEGRepresentation(image, compressQuality);
+    NSLog(@"before compress, size is %d\n after compress, size is %d", [originData length], [tempData length]);
+    return tempData;
+
+}
+
 @end

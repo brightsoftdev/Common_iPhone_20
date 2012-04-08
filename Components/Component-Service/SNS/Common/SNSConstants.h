@@ -16,3 +16,5 @@
 
 #define SNS_SINA_WEIBO          @"SINA"
 #define SNS_QQ_WEIBO            @"QQ"
+#define SNS_FACEBOOK            @"Facebook"
+#define SNS_TWITTER             @"TWitter"

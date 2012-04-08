@@ -161,6 +161,14 @@
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];	
 }
 
++ (void)gotoReview:(NSString*)appId
+{
+	NSString* iTunesLink = [NSString stringWithFormat:
+							@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appId];
+	
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];	
+}
+
 + (void)openURL:(NSString*)url
 {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];	

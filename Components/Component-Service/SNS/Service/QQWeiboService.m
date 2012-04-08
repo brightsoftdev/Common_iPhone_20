@@ -9,6 +9,7 @@
 #import "QQWeiboService.h"
 #import "QQWeiboRequest.h"
 #import "PPDebug.h"
+#import "JSON.h"
 
 @implementation QQWeiboService
 
@@ -34,7 +35,7 @@ static QQWeiboService* _defaultSinaService;
     
     workingQueue = dispatch_queue_create("sns service queue", NULL);
     
-    
+    _weiboApi = [[QWeiboSyncApi alloc] init];
     
     
     return self;
@@ -45,6 +46,8 @@ static QQWeiboService* _defaultSinaService;
     
     dispatch_release(workingQueue);
     workingQueue = NULL;
+    
+    [_weiboApi release];
     
     [_displayViewController release];
     [_request release];
@@ -129,7 +132,34 @@ static QQWeiboService* _defaultSinaService;
 
 - (void)publishWeibo:(NSString*)text delegate:(id<SNSServiceDelegate>)delegate
 {
-    
+    [self publishWeibo:text imageFilePath:nil delegate:delegate];
 }
+
+- (void)publishWeibo:(NSString*)text imageFilePath:(NSString*)imageFilePath delegate:(id<SNSServiceDelegate>)delegate
+{
+    dispatch_async(workingQueue, ^{
+        NSString* result = [_weiboApi publishMsgWithConsumerKey:_appkey 
+                                                 consumerSecret:_appSecret 
+                                                 accessTokenKey:[_request oauthToken]
+                                              accessTokenSecret:[_request oauthTokenSecret]
+                                                        content:text
+                                                      imageFile:imageFilePath 
+                                                     resultType:RESULTTYPE_JSON];
+        
+        PPDebug(@"<Publish QQ Weibo> result = %@", result);
+        
+        int resultCode = -1;
+        if ([result length] > 0){
+            NSDictionary* json = [result JSONValue];
+            resultCode = [[json objectForKey:@"ret"] intValue];
+        }                
+        
+        if ([delegate respondsToSelector:@selector(didPublishWeibo:)]){
+            [delegate didPublishWeibo:resultCode];
+        }
+    });
+}
+
+
 
 @end
