@@ -171,6 +171,7 @@
 
 + (void)openURL:(NSString*)url
 {
+    NSLog(@"Open URL=%@", url);
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];	
 }
 
