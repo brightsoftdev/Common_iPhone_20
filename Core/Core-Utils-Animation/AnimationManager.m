@@ -206,4 +206,34 @@ AnimationManager *animatinManager;
     [view.layer addAnimation:opacityAnimation forKey:@"opacityAnimation"];
 }
 
+
++ (void)alertView:(UIView *)view 
+     fromPosition:(CGPoint)fromPosition 
+       toPosition:(CGPoint)toPosition
+         interval:(NSTimeInterval)interval 
+         delegate:(id)delegate
+{
+    CABasicAnimation *translation = [CABasicAnimation animationWithKeyPath:@"position"];
+    [translation setDuration:interval];
+    [translation setFromValue:[NSValue valueWithCGPoint:fromPosition]];
+    [translation setToValue:[NSValue valueWithCGPoint:toPosition]];
+    translation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    translation.fillMode = kCAFillModeForwards;
+    translation.removedOnCompletion = NO;
+    
+    
+    CABasicAnimation * opacityAnimation = [CABasicAnimation 
+                                           animationWithKeyPath:@"opacity"]; 
+    opacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    opacityAnimation.fromValue = [NSNumber numberWithInt:0];
+    opacityAnimation.toValue = [NSNumber numberWithInt:1];
+    opacityAnimation.duration = interval;
+    opacityAnimation.fillMode = kCAFillModeForwards;
+    opacityAnimation.removedOnCompletion = NO;
+    opacityAnimation.delegate = delegate;
+    [view.layer addAnimation:translation forKey:@"translation"];
+    [view.layer addAnimation:opacityAnimation forKey:@"opacityAnimation"];
+}
+
+
 @end

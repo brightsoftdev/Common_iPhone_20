@@ -113,6 +113,8 @@
 - (void)popupMessage:(NSString*)msg title:(NSString*)title;
 - (void)popupHappyMessage:(NSString*)msg title:(NSString*)title;
 - (void)popupUnhappyMessage:(NSString*)msg title:(NSString*)title;
+- (void)clearUnPopupMessages;
+
 - (void)clearTimer;
 
 - (void)initLocationManager;

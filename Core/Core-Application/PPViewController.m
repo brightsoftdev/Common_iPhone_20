@@ -79,6 +79,11 @@
 
 }
 
+- (void)clearUnPopupMessages
+{
+    [[TKAlertCenter defaultCenter] clearAlerts];
+}
+
 - (void)dismissAlertView:(id)sender
 {
     NSLog(@"alert view retain count=%d", [alertView retainCount]);

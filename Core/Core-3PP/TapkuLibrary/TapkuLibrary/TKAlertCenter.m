@@ -31,7 +31,7 @@
 
 #import "TKAlertCenter.h"
 #import "UIView+TKCategory.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 #pragma mark -
 @interface TKAlertView : UIView {
@@ -114,6 +114,7 @@
 
 #pragma mark -
 @implementation TKAlertCenter
+@synthesize alerts = _alerts;
 
 #pragma mark Init & Friends
 + (TKAlertCenter*) defaultCenter {
@@ -148,6 +149,16 @@
 
 
 #pragma mark Show Alert Message
+
+- (void) clearAlerts
+{
+    if ([_alerts count] > 1) {
+        NSObject *firstAlert = [_alerts objectAtIndex:0];
+        [_alerts removeAllObjects]; 
+        [_alerts addObject:firstAlert];
+    }
+}
+
 - (void) showAlerts{
 	
 	if([_alerts count] < 1) {
@@ -232,7 +243,9 @@
 - (void) animationStep3{
 	
 	[_alertView removeFromSuperview];
-	[_alerts removeObjectAtIndex:0];
+    if ([_alerts count] != 0) {
+        [_alerts removeObjectAtIndex:0];        
+    }
 	[self showAlerts];
 	
 }
