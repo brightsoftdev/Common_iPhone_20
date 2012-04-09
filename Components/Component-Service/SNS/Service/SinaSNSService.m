@@ -130,6 +130,9 @@ static SinaSNSService* _defaultSinaService;
 - (void)publishWeibo:(NSString*)text imageFilePath:(NSString*)imageFilePath delegate:(id<SNSServiceDelegate>)delegate
 {
     PPDebug(@"<publishWeibo> text=%@, image=%@", text, imageFilePath);
+    self.engine = [[[WBEngine alloc] initWithAppKey:_appkey appSecret:_appSecret] autorelease];
+    self.engine.delegate = self;
+
     self.displayViewController = delegate;
     _action = ACTION_SEND_WEIBO;
     [_engine sendWeiBoWithText:text imageFilePath:imageFilePath];
