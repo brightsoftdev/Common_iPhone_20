@@ -8,6 +8,10 @@
 
 #import "PPApplication.h"
 #import "HJObjManager.h"
+#import "ASIHTTPRequest.h"
+#import "JSON.h"
+#import "UIUtils.h"
+#import "TimeUtils.h"
 
 #pragma mark Global Methods
 
@@ -109,7 +113,7 @@ BOOL isFree()
 
 - (void)stopUpdatingLocation:(NSString *)state {
 	
-	NSLog(@"stopUpdatingLocation,state=%@", state);
+//	NSLog(@"stopUpdatingLocation,state=%@", state);
     [locationManager stopUpdatingLocation];
     locationManager.delegate = nil;    
 }
@@ -337,6 +341,108 @@ if (nil != payload) {
 	fileCache.fileCountLimit = 100;
 	fileCache.fileAgeLimit = 60*60*24*7; //1 week
 	[fileCache trimCacheUsingBackgroundThread];    
+}
+
+#define KEY_APP_NEW_VERSION             @"checkAppVersion_KEY_APP_NEW_VERSION"
+#define KEY_APP_NEW_VERSION_URL         @"checkAppVersion_KEY_APP_NEW_VERSION_URL"
+#define KEY_APP_NEW_VERSION_INFO        @"checkAppVersion_KEY_APP_NEW_VERSION_INFO"
+#define KEY_APP_LAST_CHECK_DATE         @"checkAppVersion_KEY_APP_LAST_CHECK_DATE"
+
+- (void)openAppForUpgrade:(NSString*)appId
+{
+//    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSString* appUrl = [userDefaults objectForKey:KEY_APP_NEW_VERSION_URL];
+    [UIUtils openApp:appId];
+}
+
+- (void)askToDownloadNewVersion:(NSString*)newVersionId newVersionInfo:(NSString*)newVersionInfo newVersionUrl:(NSString*)newVersionUrl
+{
+    int randValue = rand() % 2;
+    if (randValue)
+        return;
+    
+    NSString* message = [NSString stringWithFormat:NSLS(@"kNewVersionMessage"), newVersionId];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLS(@"kNewVersionTitle") message:message delegate:self cancelButtonTitle:NSLS(@"Remind Later") otherButtonTitles:NSLS(@"Upgrade Now"), nil];
+    alertView.tag = CHECK_APP_VERSION_ALERT_VIEW;
+    [alertView show];
+    [alertView release];
+}
+
+- (BOOL)hasCheckAppVersionToday
+{
+    NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_APP_LAST_CHECK_DATE];
+    if (date == nil)
+        return NO;
+    
+    if (isLocalToday(date)){
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
+
+- (void)checkAppVersion:(NSString*)appId
+{
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];  
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];    
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* newVersion = [userDefaults objectForKey:KEY_APP_NEW_VERSION];
+    NSString* appUrl = [userDefaults objectForKey:KEY_APP_NEW_VERSION_URL];
+    NSString* newVersionInfo = [userDefaults objectForKey:KEY_APP_NEW_VERSION_INFO];
+    if (newVersion && appUrl){
+        [self askToDownloadNewVersion:newVersion newVersionInfo:newVersionInfo newVersionUrl:appUrl];
+        return;
+    }    
+    
+    if ([self hasCheckAppVersionToday]){
+        return;
+    }
+    
+    [userDefaults setObject:[NSDate date] forKey:KEY_APP_LAST_CHECK_DATE];
+
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);    
+    if (queue == NULL){
+        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+        if (queue == NULL){
+            return;
+        }
+    }
+    
+    dispatch_async(queue, ^{
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId]]; 
+        ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:url];
+        [request startSynchronous];
+        NSString* responseString = [request responseString];
+        if ([responseString length] > 0){
+            NSDictionary *jsonData = [responseString JSONValue];  
+            NSArray *infoArray = [jsonData objectForKey:@"results"];  
+            if ([infoArray count] == 0)
+                return;
+            
+            NSDictionary *releaseInfo = [infoArray objectAtIndex:0];  
+            
+            NSString *latestVersion = [releaseInfo objectForKey:@"version"];  
+            NSString *trackViewUrl = [releaseInfo objectForKey:@"trackViewUrl"];
+            NSString *releaseNotes = [releaseInfo objectForKey:@"releaseNotes"];
+            NSLog(@"releaseInfo=%@", [releaseInfo description]);
+            
+            if ([latestVersion isEqualToString:currentVersion] == NO){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // save track view URL and new version to user defaults
+                    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:latestVersion forKey:KEY_APP_NEW_VERSION];
+                    [userDefaults setObject:trackViewUrl forKey:KEY_APP_NEW_VERSION_URL];
+                    [userDefaults setObject:releaseInfo forKey:KEY_APP_NEW_VERSION_INFO];
+                    [userDefaults synchronize];
+                    
+                    [self askToDownloadNewVersion:latestVersion newVersionInfo:releaseNotes newVersionUrl:trackViewUrl];
+                });
+            }
+        }
+    });
 }
 
 - (void)dealloc

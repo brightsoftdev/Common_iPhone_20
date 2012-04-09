@@ -73,7 +73,8 @@
 			NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 			[defaults setValue:version forKey:KeyReviewed];
 			
-			[UIUtils openApp:appId];
+//			[UIUtils openApp:appId];
+            [UIUtils gotoReview:appId];        
 			
 			break;
 		}

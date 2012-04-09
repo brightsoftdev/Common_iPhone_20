@@ -349,7 +349,6 @@ static FacebookSNSService* _defaultService;
                 [_displayViewController didLogin:0 userInfo:userInfo];
             }            
             
-            [self test];
         }
     }
     
