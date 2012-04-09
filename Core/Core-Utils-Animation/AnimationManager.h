@@ -56,4 +56,11 @@
        toPosition:(CGPoint)toPosition
          interval:(NSTimeInterval)interval
          delegate:(id)delegate;
++ (void)alertView:(UIView *)view 
+     fromPosition:(CGPoint)fromPosition 
+       toPosition:(CGPoint)toPosition
+         interval:(NSTimeInterval)interval 
+         delegate:(id)delegate;
+
+
 @end
