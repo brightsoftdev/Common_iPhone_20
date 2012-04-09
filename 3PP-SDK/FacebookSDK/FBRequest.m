@@ -147,7 +147,16 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
     if ([dataDictionary count] > 0) {
         for (id key in dataDictionary) {
             NSObject *dataParam = [dataDictionary objectForKey:key];
-            if ([dataParam isKindOfClass:[UIImage class]]) {
+            if ([key isEqualToString:@"source"] && [dataParam isKindOfClass:[NSData class]]){
+                NSData* imageData = (NSData*)dataParam;
+                [self utfAppendBody:body
+                               data:[NSString stringWithFormat:
+                                     @"Content-Disposition: form-data; filename=\"%@\"\r\n", key]];
+                [self utfAppendBody:body
+                               data:[NSString stringWithString:@"Content-Type: image/gif\r\n\r\n"]];
+                [body appendData:imageData];                
+            }
+            else if ([dataParam isKindOfClass:[UIImage class]]) {
                 NSData* imageData = UIImagePNGRepresentation((UIImage*)dataParam);
                 [self utfAppendBody:body
                                data:[NSString stringWithFormat:

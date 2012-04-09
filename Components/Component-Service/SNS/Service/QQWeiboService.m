@@ -11,6 +11,9 @@
 #import "PPDebug.h"
 #import "JSON.h"
 
+#define QQ_OAUTH_TOKEN          @"QQ_OAUTH_TOKEN"
+#define QQ_OAUTH_TOKEN_SECRET   @"QQ_OAUTH_TOKEN_SECRET"
+
 @implementation QQWeiboService
 
 @synthesize request = _request;
@@ -62,11 +65,12 @@ static QQWeiboService* _defaultSinaService;
     self.appSecret = secret;
     self.appkey = key;
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.request = [[[QQWeiboRequest alloc] initWithAppKey:self.appkey
                                                   appSecret:self.appSecret
                                                 callbackURL:@"null"
-                                                 oauthToken:nil
-                                           oauthTokenSecret:nil] autorelease];
+                                                 oauthToken:[userDefaults objectForKey:QQ_OAUTH_TOKEN]
+                                           oauthTokenSecret:[userDefaults objectForKey:QQ_OAUTH_TOKEN_SECRET]] autorelease];
     
     
     //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -121,6 +125,15 @@ static QQWeiboService* _defaultSinaService;
         }                
         
         dispatch_async(dispatch_get_main_queue(), ^{
+
+            // save oauthen key & secret
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            if ([snsRequest oauthTokenSecret] && [snsRequest oauthToken]){
+                [userDefaults setObject:[snsRequest oauthToken] forKey:QQ_OAUTH_TOKEN];
+                [userDefaults setObject:[snsRequest oauthTokenSecret] forKey:QQ_OAUTH_TOKEN_SECRET];
+                [userDefaults synchronize];
+            }
+            
             [_displayViewController hideActivity];
             PPDebug(@"SNS Login Result = %d", finalResult);
             if ([_displayViewController respondsToSelector:@selector(didLogin:userInfo:)]){
@@ -148,15 +161,17 @@ static QQWeiboService* _defaultSinaService;
         
         PPDebug(@"<Publish QQ Weibo> result = %@", result);
         
-        int resultCode = -1;
-        if ([result length] > 0){
-            NSDictionary* json = [result JSONValue];
-            resultCode = [[json objectForKey:@"ret"] intValue];
-        }                
-        
-        if ([delegate respondsToSelector:@selector(didPublishWeibo:)]){
-            [delegate didPublishWeibo:resultCode];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            int resultCode = -1;
+            if ([result length] > 0){
+                NSDictionary* json = [result JSONValue];
+                resultCode = [[json objectForKey:@"ret"] intValue];
+            }                
+            
+            if ([delegate respondsToSelector:@selector(didPublishWeibo:)]){
+                [delegate didPublishWeibo:resultCode];
+            }
+        });
     });
 }
 

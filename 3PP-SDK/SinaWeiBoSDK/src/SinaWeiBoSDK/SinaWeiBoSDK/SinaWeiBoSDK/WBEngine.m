@@ -268,36 +268,36 @@
 
 - (void)sendWeiBoWithText:(NSString *)text imageFilePath:(NSString *)imageFilePath
 {
-//    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:2];
-//    
-//    //NSString *sendText = [text URLEncodedString];
-//    
-//	[params setObject:(text ? text : @"") forKey:@"status"];
-//	
-//    if (imageFilePath)
-//    {
-//        NSData *data = [NSData dataWithContentsOfFile:imageFilePath];
-//		[params setObject:data forKey:@"pic"];
-//        
-//        [self loadRequestWithMethodName:@"statuses/upload.json"
-//                             httpMethod:@"POST"
-//                                 params:params
-//                           postDataType:kWBRequestPostDataTypeMultipart
-//                       httpHeaderFields:nil];
-//    }
-//    else
-//    {
-//        [self loadRequestWithMethodName:@"statuses/update.json"
-//                             httpMethod:@"POST"
-//                                 params:params
-//                           postDataType:kWBRequestPostDataTypeNormal
-//                       httpHeaderFields:nil];
-//    }
-
-
-//    - (void)sendWeiBoWithText:(NSString *)text image:(UIImage *)image
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:2];
     
-    [self sendWeiBoWithText:text image:[UIImage imageWithContentsOfFile:imageFilePath]];
+    //NSString *sendText = [text URLEncodedString];
+    
+	[params setObject:(text ? text : @"") forKey:@"status"];
+	
+    if (imageFilePath)
+    {
+        NSData *data = [NSData dataWithContentsOfFile:imageFilePath];
+		[params setObject:data forKey:@"pic"];
+        
+        [self loadRequestWithMethodName:@"statuses/upload.json"
+                             httpMethod:@"POST"
+                                 params:params
+                           postDataType:kWBRequestPostDataTypeMultipart
+                       httpHeaderFields:nil];
+    }
+    else
+    {
+        [self loadRequestWithMethodName:@"statuses/update.json"
+                             httpMethod:@"POST"
+                                 params:params
+                           postDataType:kWBRequestPostDataTypeNormal
+                       httpHeaderFields:nil];
+    }
+
+
+////    - (void)sendWeiBoWithText:(NSString *)text image:(UIImage *)image
+//    
+//    [self sendWeiBoWithText:text image:[UIImage imageWithContentsOfFile:imageFilePath]];
 }
 
 

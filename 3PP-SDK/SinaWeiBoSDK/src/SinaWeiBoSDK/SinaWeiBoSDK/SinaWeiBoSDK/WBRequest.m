@@ -124,7 +124,13 @@
 			{
 				NSObject *dataParam = [dataDictionary valueForKey:key];
 				
-				if ([dataParam isKindOfClass:[UIImage class]]) 
+                if ([key isEqualToString:@"pic"] && [dataParam isKindOfClass:[NSData class]]){
+					NSData* imageData = (NSData*)dataParam;
+					[WBRequest appendUTF8Body:body dataString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"file.png\"\r\n", key]];
+					[WBRequest appendUTF8Body:body dataString:[NSString stringWithString:@"Content-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"]];
+					[body appendData:imageData];                    
+                }
+				else if ([dataParam isKindOfClass:[UIImage class]]) 
 				{
 					NSData* imageData = UIImagePNGRepresentation((UIImage *)dataParam);
 					[WBRequest appendUTF8Body:body dataString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"file.png\"\r\n", key]];
