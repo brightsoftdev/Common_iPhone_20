@@ -39,9 +39,9 @@
 	TKAlertView *_alertView;
 	CGRect _alertFrame;
 }
-
+@property(nonatomic, retain)NSMutableArray *alerts;
 + (TKAlertCenter*) defaultCenter;
-
+- (void) clearAlerts;
 - (void) postAlertWithMessage:(NSString*)message image:(UIImage*)image;
 - (void) postAlertWithMessage:(NSString *)message;
 
