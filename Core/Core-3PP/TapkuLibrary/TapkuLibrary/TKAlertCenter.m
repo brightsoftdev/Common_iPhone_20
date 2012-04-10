@@ -154,8 +154,10 @@
 {
     if ([_alerts count] > 1) {
         NSObject *firstAlert = [_alerts objectAtIndex:0];
+        [firstAlert retain];
         [_alerts removeAllObjects]; 
-        [_alerts addObject:firstAlert];
+        [_alerts addObject:firstAlert];        
+        [firstAlert release];
     }
 }
 
