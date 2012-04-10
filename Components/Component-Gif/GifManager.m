@@ -7,6 +7,7 @@
 //
 
 #import "GifManager.h"
+#import "PPDebug.h"
 
 @implementation GifManager
 
@@ -26,6 +27,9 @@
 #endif
 	return frame;
 }
+
+#define GIF_COMPRESS    0.5
+#define GIF_SPEED       0.2
 
 + (void)createGifToPath:(NSString*)filePath byImages:(NSArray*)images
 {
@@ -52,11 +56,12 @@
         //        float progress = 0.1 + ((0.9 / (float)numberOfFrames) * (float)i);
         //        [self setProgressPercent:[NSNumber numberWithFloat:progress]];
         //        [self setProgressLabel:[NSString stringWithFormat:@"Resizing Frame (%d/%d)", i + 1, (int)[images count]]];
-        NSLog(@"dealing with No.%d image", i);
+        PPDebug(@"dealing with No.%d image", i);
         UIImage * image = [gifFrameArray objectAtIndex:i];
-        NSLog(@"frame size = %d", [(NSData*)UIImageJPEGRepresentation(image, 1.0) length]);
+//        NSData* dataAfterCompressed = UIImageJPEGRepresentation(image, GIF_COMPRESS);
+        PPDebug(@"frame size before = %d", [(NSData*)UIImageJPEGRepresentation(image, 1.0) length]);
         ANGifImageFrame * theFrame = [GifManager imageFrameWithImage:image fitting:canvasSize];
-        theFrame.delayTime = 0.5;
+        theFrame.delayTime = GIF_SPEED;
         //        [self setProgressLabel:[NSString stringWithFormat:@"Encoding Frame (%d/%d)", i + 1, (int)[images count]]];
         [encoder addImageFrame:theFrame];
     }
@@ -65,8 +70,6 @@
     [encoder release];
 #endif
     //[self performSelectorOnMainThread:@selector(informCallbackDone:) withObject:fileOutput waitUntilDone:NO];
-    NSData * attachmentData = [NSData dataWithContentsOfFile:tempFile];
-    NSLog(@"Path: %@", tempFile);
     
     //[[NSFileManager defaultManager] removeItemAtPath:aFile error:nil];
 //    MFMailComposeViewController * compose = [[MFMailComposeViewController alloc] init];
@@ -76,8 +79,14 @@
 //    //[compose setMailComposeDelegate:self];
 //    [self performSelector:@selector(showViewController:) withObject:compose afterDelay:1];
 //    [compose release];
+#ifdef DEBUG    
+//    NSData * attachmentData = [NSData dataWithContentsOfFile:tempFile];
+//    NSLog(@"Path: %@", tempFile);
+
     NSDictionary * attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:tempFile error:nil];
-    NSLog(@"file size = %.2fMB", [(NSNumber*)[attributes objectForKey:NSFileSize] intValue]/1024/1024.0);
+    PPDebug(@"file path = %@, size = %.2fMB", tempFile,
+            [(NSNumber*)[attributes objectForKey:NSFileSize] intValue]/1024/1024.0);
+#endif    
 }
 
 @end

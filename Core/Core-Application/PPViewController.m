@@ -68,14 +68,14 @@
 
 - (void)popupHappyMessage:(NSString*)msg title:(NSString*)title
 {
-	NSString* newMsg = [NSString stringWithFormat:@"%@ %@", kHappyFace, msg];
-	[self popupMessage:newMsg title:title];
+//	NSString* newMsg = [NSString stringWithFormat:@"%@ %@", kHappyFace, msg];
+	[self popupMessage:msg title:title];
 }
 
 - (void)popupUnhappyMessage:(NSString*)msg title:(NSString*)title
 {
-	NSString* newMsg = [NSString stringWithFormat:@"%@ %@", kUnhappyFace, msg];
-	[self popupMessage:newMsg title:title];
+//	NSString* newMsg = [NSString stringWithFormat:@"%@ %@", kUnhappyFace, msg];
+	[self popupMessage:msg title:title];
 
 }
 
