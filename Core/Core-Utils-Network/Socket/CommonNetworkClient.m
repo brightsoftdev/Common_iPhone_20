@@ -7,6 +7,7 @@
 //
 
 #import "CommonNetworkClient.h"
+#import "PPDebug.h"
 
 @implementation CommonNetworkClient
 
@@ -43,7 +44,7 @@
 
 - (void)handleData:(NSData*)data
 {
-    NSLog(@"Handle Data But Do Nothing, You Must Override this method!");
+    PPDebug(@"Handle Data But Do Nothing, You Must Override this method!");
 }
 
 - (BOOL)sendData:(NSData*)data
@@ -52,7 +53,7 @@
     int TAG_DATA = 2;
     
     if ([data length] == 0){
-        NSLog(@"WARNING, Send Data But Data Length = 0");
+        PPDebug(@"WARNING, Send Data But Data Length = 0");
         return YES;
     }
     
@@ -76,7 +77,7 @@
 
 - (void)stopReconnectTimer
 {
-    NSLog(@"stopReconnectTimer");
+    PPDebug(@"stopReconnectTimer");
 
     [self.reconnectTimer invalidate];
     self.reconnectTimer = nil;
@@ -89,7 +90,7 @@
     // stop timer if any
     [self stopReconnectTimer];
         
-    NSLog(@"startReconnectTimer");
+    PPDebug(@"startReconnectTimer");
     dispatch_async(dispatch_get_main_queue(), ^{
         self.reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:RECONNECT_TIMER_INTERVAL
                                                                target:self 
@@ -105,7 +106,7 @@
     if (!self.needReconnect)
         return;
         
-    NSLog(@"Reconnecting...");
+    PPDebug(@"Reconnecting...");
     [self connect:serverHost port:serverPort];
 }
 
@@ -120,7 +121,7 @@
         
         
         if (asyncSocket && ([self.asyncSocket isConnected] == YES)){
-            NSLog(@"Connecting to Host(%@) Port(%d) But Already Connected?", host, port);
+            PPDebug(@"Connecting to Host(%@) Port(%d) But Already Connected?", host, port);
             return;
         }
         
@@ -141,7 +142,7 @@
                             autorelease];
         NSError *err = nil;
         [asyncSocket connectToHost:host onPort:port error:&err];    
-        NSLog(@"Connecting to Host(%@) Port(%d) Error(%@)", host, port, [err description]);        
+        PPDebug(@"Connecting to Host(%@) Port(%d) Error(%@)", host, port, [err description]);        
     });
     
     return;
@@ -154,7 +155,7 @@
         [self setNeedReconnect:NO];        
         [self stopReconnectTimer];
         
-        NSLog(@"<disconnect>");
+        PPDebug(@"<disconnect>");
         if (asyncSocket){
             [asyncSocket setDelegate:nil delegateQueue:NULL];
             [asyncSocket disconnectAfterReadingAndWriting];
@@ -169,12 +170,12 @@
 
 - (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock
 {
-    NSLog(@"<socketDidCloseReadStream>");
+    PPDebug(@"<socketDidCloseReadStream>");
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NSLog(@"<socketDidDisconnect> error = %@", [err description]);
+    PPDebug(@"<socketDidDisconnect> error = %@", [err description]);
     [self.asyncSocket setDelegate:nil delegateQueue:NULL];
     [self.asyncSocket disconnect];
     self.asyncSocket = nil;
@@ -192,17 +193,17 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-    NSLog(@"<didWriteDataWithTag> tag = %ld", tag);
+    PPDebug(@"<didWriteDataWithTag> tag = %ld", tag);
 }
 
 - (void)socket:(GCDAsyncSocket *)sender didReadData:(NSData *)data withTag:(long)tag
 {
-    NSLog(@"<didReadData> data length=%d, tag = %ld", [data length], tag);    
+    PPDebug(@"<didReadData> data length=%d, tag = %ld", [data length], tag);    
     if (tag == READ_TAG_LENGTH)
     {
         int* bodyLength = (int*)[data bytes];
         int len = ntohl(*bodyLength);
-        NSLog(@"<didReadData> header length read, length = %d", len);
+        PPDebug(@"<didReadData> header length read, length = %d", len);
         [asyncSocket readDataToLength:len withTimeout:COMMON_NETWORK_READ_TIMEOUT tag:READ_TAG_DATA];
     }
     else if (tag == READ_TAG_DATA)
@@ -226,7 +227,7 @@
 
 - (void)socket:(GCDAsyncSocket *)sender didConnectToHost:(NSString *)host port:(UInt16)port
 {
-    NSLog(@"Host(%@) Port(%d) Connected", host, port);
+    PPDebug(@"Host(%@) Port(%d) Connected", host, port);
     
     if (delegate && [delegate respondsToSelector:@selector(didConnected)]){
         [delegate didConnected];
