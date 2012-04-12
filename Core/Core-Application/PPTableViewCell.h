@@ -20,7 +20,7 @@
 @interface PPTableViewCell : UITableViewCell {
     NSIndexPath *indexPath;    
     id delegate;
-    PPTableViewController *tableViewController;
+//    PPTableViewController *tableViewController;
     
 }
 
@@ -32,6 +32,6 @@
 - (void)setCellStyle;
 @property (nonatomic, retain) id delegate;
 @property (nonatomic, retain) NSIndexPath *indexPath;
-@property (nonatomic, retain) PPTableViewController *tableViewController;
+//@property (nonatomic, retain) PPTableViewController *tableViewController;
 
 @end
