@@ -51,11 +51,7 @@
 #if !__has_feature(objc_arc)
     [extension release];
 #endif
-    float numberOfFrames = (float)[gifFrameArray count];
     for (int i = 0; i < [gifFrameArray count]; i++) {
-        //        float progress = 0.1 + ((0.9 / (float)numberOfFrames) * (float)i);
-        //        [self setProgressPercent:[NSNumber numberWithFloat:progress]];
-        //        [self setProgressLabel:[NSString stringWithFormat:@"Resizing Frame (%d/%d)", i + 1, (int)[images count]]];
         PPDebug(@"dealing with No.%d image", i);
         UIImage * image = [gifFrameArray objectAtIndex:i];
 //        NSData* dataAfterCompressed = UIImageJPEGRepresentation(image, GIF_COMPRESS);
