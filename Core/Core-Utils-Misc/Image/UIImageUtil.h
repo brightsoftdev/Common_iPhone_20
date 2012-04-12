@@ -22,6 +22,7 @@
 + (UIImage*)strectchableImageName:(NSString*)name topCapHeight:(int)topCapHeight;
 + (UIImage*)strectchableTopImageName:(NSString*)name;
 + (UIImage*)strectchableImageName:(NSString*)name leftCapWidth:(int)leftCapWidth topCapHeight:(int)topCapHeight;
++ (UIImage*)creatThumbnailsWithData:(NSData*)data withSize:(CGSize)size;
 
 - (UIImage*)defaultStretchableImage;
 

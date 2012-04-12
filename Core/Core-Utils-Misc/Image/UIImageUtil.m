@@ -8,6 +8,7 @@
 
 #import "UIImageUtil.h"
 #import "FileUtil.h"
+#import "UIImageExt.h"
 
 @implementation UIImage (UIImageUtil)
 
@@ -149,6 +150,12 @@
     NSLog(@"before compress, size is %d\n after compress, size is %d", [originData length], [tempData length]);
     return tempData;
 
+}
+
++ (UIImage*)creatThumbnailsWithData:(NSData*)data withSize:(CGSize)size
+{
+    UIImage* tempImage = [UIImage imageWithData:data];
+    return [tempImage imageByScalingAndCroppingForSize:size];
 }
 
 @end
