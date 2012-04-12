@@ -195,7 +195,7 @@ int fileAgeCompareFunction(id obj1, id obj2, void *context) {
 	//creation date used to see age of file
 	//modification date used to see staleness of file - how long since last used.
 	
-	NSLog(@"triming cache %@",cachePath);
+//	NSLog(@"triming cache %@",cachePath);
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *file;
@@ -259,7 +259,7 @@ int fileAgeCompareFunction(id obj1, id obj2, void *context) {
 			index--;
 		}
 	}
-	NSLog(@"cache file trimed %i files",deletedCount);
+//	NSLog(@"cache file trimed %i files",deletedCount);
 	if (isCounting) {
 		fileCount -= deletedCount;
 		byteCount -= deletedBytes;
