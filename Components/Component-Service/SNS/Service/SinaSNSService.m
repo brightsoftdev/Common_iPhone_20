@@ -198,7 +198,11 @@ static SinaSNSService* _defaultSinaService;
 {
     PPDebug(@"<engineNotAuthorized>");
     [_displayViewController hideActivity];
+    [_displayViewController popupMessage:@"微博未授权，请授权后重新发送微博" title:nil];
 
+    // login again
+    _needGetUserInfo = NO;
+    [_engine logIn];
     
 //    if (_action == ACTION_SEND_WEIBO){
 //        if ([_displayViewController respondsToSelector:@selector(didPublishWeibo:)]){
@@ -213,6 +217,7 @@ static SinaSNSService* _defaultSinaService;
 {
     PPDebug(@"<engineAuthorizeExpired>");
     [_displayViewController hideActivity];
+    [_displayViewController popupMessage:@"微博未授权，请授权后重新发送微博" title:nil];
 
     // login again
     _needGetUserInfo = NO;
