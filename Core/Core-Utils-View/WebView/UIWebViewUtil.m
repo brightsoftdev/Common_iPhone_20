@@ -18,7 +18,7 @@
 	if(!rawLocationString)
 		return nil;
 	//URLWithString: needs percent escapes added or it will fail with, eg. a file:// URL with spaces or any URL with unicode.
-	NSString* locationString = [locationString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSString* locationString = [rawLocationString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	return [NSURL URLWithString:locationString];
 }
 

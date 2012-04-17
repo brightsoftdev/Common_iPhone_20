@@ -101,7 +101,7 @@ StatusView *globalStatusView;
     }
 
     [self.timer invalidate];
-    self.timer = [[NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(didHideStatusText) userInfo:nil repeats:NO] retain];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(didHideStatusText) userInfo:nil repeats:NO];
     
 }
 

@@ -30,7 +30,9 @@
         
 		// initialize frame
 		CGRect rect = [self initTextFieldFrame];		
-		self.textField = [[UITextField alloc] initWithFrame:rect];		
+        UITextField *textfield = [[UITextField alloc] initWithFrame:rect];
+		self.textField = textfield;
+		[textfield release];
 
 		// other basic information
 		self.textField.clearsOnBeginEditing = NO;

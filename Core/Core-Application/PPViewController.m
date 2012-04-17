@@ -945,11 +945,11 @@
 + (UIScrollView*)createButtonScrollViewByButtonArray:(NSArray*)buttons 
                                       buttonsPerLine:(int)buttonsPerLine buttonSeparatorY:(CGFloat)buttonSeparatorY
 {
-    float buttonLen;
-    float buttonHeight;
-    int fitButtonsPerLine;
-    int rowIndex;
-    int columnIndex;
+    float buttonLen = 0;
+    float buttonHeight = 0 ;
+    NSUInteger fitButtonsPerLine = 0;
+    int rowIndex = 0;
+    int columnIndex = 0;
     UIScrollView* scrollView = [[[UIScrollView alloc] init] autorelease];
 
     if (buttons && [buttons count]>0) {
@@ -977,7 +977,12 @@
         button.frame = CGRectMake(buttonSeparatorX+columnIndex*(buttonSeparatorX+buttonLen), rowIndex*(buttonHeight+buttonSeparatorY),buttonLen, buttonHeight);
         [scrollView addSubview:button];
     }
-    [scrollView setContentSize:CGSizeMake(320, ([buttons count]/fitButtonsPerLine+1)*(buttonHeight+buttonSeparatorY))];
+    
+    int value = 0;
+    if (fitButtonsPerLine)
+        value = [buttons count]/fitButtonsPerLine;
+    
+    [scrollView setContentSize:CGSizeMake(320, (value+1)*(buttonHeight+buttonSeparatorY))];
     [scrollView setBackgroundColor:[UIColor colorWithRed:0xF8/255.0
                                                    green:0xFC/255.0
                                                     blue:0xFE/255.0 

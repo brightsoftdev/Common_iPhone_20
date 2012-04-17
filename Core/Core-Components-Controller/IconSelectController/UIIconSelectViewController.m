@@ -33,7 +33,10 @@
 	self.view.backgroundColor = [UIColor clearColor];	
 	
 	// create a image view
-	self.backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	self.backgroundImageView = imageView;
+    [imageView release];
+    
 	[backgroundImageView setImage:[UIImage imageNamed:name]];	
 	
 	// add the image view to current view
@@ -65,8 +68,10 @@
 	// set title
 	self.navigationItem.title = kTitleSelectIcon;
 	
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kInfoFromPhoto  style: UIBarButtonItemStylePlain
-																						   target:self action:@selector(clickFromPhoto:)];			
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:kInfoFromPhoto  style: UIBarButtonItemStylePlain
+                                                                     target:self action:@selector(clickFromPhoto:)];
+	self.navigationItem.rightBarButtonItem = barButtonItem;
+    [barButtonItem release];
 //	self.navigationItem.rightBarButtonItem.title = kInfoFromPhoto;
 }
 
@@ -74,7 +79,10 @@
 
 - (void)createIndicatorView
 {
-	self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];			
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];	
+	self.indicatorView = activityIndicatorView;
+    [activityIndicatorView release];
+    
 	[self.indicatorView setCenter:CGPointMake(160, 208)];
 	self.indicatorView.hidesWhenStopped = YES;
 	

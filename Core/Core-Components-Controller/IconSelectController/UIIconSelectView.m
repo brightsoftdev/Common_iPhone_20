@@ -112,10 +112,10 @@
 
 - (void)resetSelectedImage
 {
-	if (self.selectedImageName != nil){
-		[self.selectedImageName release];
+//	if (self.selectedImageName != nil){
+//		[self.selectedImageName release];
 		self.selectedImageName = nil;
-	}
+//	}
 }
 
 @end

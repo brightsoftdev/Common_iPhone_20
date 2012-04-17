@@ -14,7 +14,7 @@
 
 + (UIAlertView*)popup:(NSString *)title msg:(NSString*)msg
 {
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil] autorelease];
 	[alertView showWithBackground];
 	return alertView;
 }

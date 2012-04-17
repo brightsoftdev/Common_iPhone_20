@@ -164,7 +164,7 @@
 		// set toolbar frame
 //		CGRect toolbarFrame = CGRectMake(0, self.contentView.frame.size.height, self.contentView.frame.size.width, kToolBarHeight);					
 		CGRect toolbarFrame = CGRectMake(0, self.contentView.bounds.size.height, self.contentView.frame.size.width, kToolBarHeight);					
-		UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:toolbarFrame];
+		UIToolbar* toolbar = [[[UIToolbar alloc] initWithFrame:toolbarFrame] autorelease];
 		
 		toolbar.tag = kTableViewCellToolbarTag;
 		[self.contentView addSubview:toolbar];

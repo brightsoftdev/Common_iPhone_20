@@ -108,7 +108,7 @@
 	
     NSString *iPhoneSimulator = @"iPhone Simulator";
 	
-    uint detected;
+    uint detected = 0;
 	
     if ([model compare:iPhoneSimulator] == NSOrderedSame) {
         // iPhone simulator

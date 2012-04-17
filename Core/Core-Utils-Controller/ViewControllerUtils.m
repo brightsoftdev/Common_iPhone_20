@@ -15,18 +15,22 @@
 
 - (void)setLeftBackButton:(SEL)selector
 {
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
-																			 style:UIBarButtonItemStylePlain
-																			target:self 
-																			action:selector];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self 
+                                                                     action:selector];
+	self.navigationItem.leftBarButtonItem = barButtonItem;
+    [barButtonItem release];
 }
 
 - (void)setLeftCancelButton:(SEL)selector
 {
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"")
-																			 style:UIBarButtonItemStylePlain
-																			target:self 
-																			action:selector];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"")
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self 
+                                                                     action:selector];
+	self.navigationItem.leftBarButtonItem = barButtonItem;
+    [barButtonItem release];
 }
 
 - (void)clickBack:(id)sender
