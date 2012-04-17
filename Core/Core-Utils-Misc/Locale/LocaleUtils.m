@@ -39,6 +39,12 @@
     return [[self getLanguageCode] hasPrefix:@"zh-Han"];
 }
 
++ (BOOL)isTraditionalChinese
+{
+    return [LocaleUtils isChinese] && ![[self getLanguageCode] hasPrefix:@"zh-Hans"];
+}
+
+
 + (BOOL)isChina
 {
 	NSLocale *currentLocale = [NSLocale currentLocale];

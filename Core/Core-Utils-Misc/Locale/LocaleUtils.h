@@ -18,5 +18,5 @@
 + (NSString *)getLanguageCode;
 
 + (BOOL)isChina;
-
++ (BOOL)isTraditionalChinese;
 @end
