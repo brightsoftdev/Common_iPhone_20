@@ -159,6 +159,7 @@
         if (asyncSocket){
             [asyncSocket setDelegate:nil delegateQueue:NULL];
             [asyncSocket disconnectAfterReadingAndWriting];
+            [asyncSocket disconnect];
             self.asyncSocket = nil;
         }
     });
