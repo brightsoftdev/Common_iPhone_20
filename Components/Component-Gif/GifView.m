@@ -34,6 +34,7 @@
 	index = index%count;
 	CGImageRef ref = CGImageSourceCreateImageAtIndex(gif, index, (CFDictionaryRef)gifProperties);
 	self.layer.contents = (id)ref;
+    CGImageRelease(ref);
 }
 
 -(void)removeFromSuperview
