@@ -27,6 +27,7 @@
     }
     return self;
 }
+
 -(void)play
 {
 	index ++;
@@ -34,6 +35,7 @@
 	CGImageRef ref = CGImageSourceCreateImageAtIndex(gif, index, (CFDictionaryRef)gifProperties);
 	self.layer.contents = (id)ref;
 }
+
 -(void)removeFromSuperview
 {
 	NSLog(@"removeFromSuperview");

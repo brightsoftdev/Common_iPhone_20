@@ -78,7 +78,7 @@
 //		UIToolbar 
 		
 		CGRect textLabelRect = CGRectMake(kTextLableIndent, 0, width - kTextLableIndent * 6, heightWithoutToolbar);
-		self.theNewTextLabel = [[UILabel alloc] initWithFrame:textLabelRect];
+		self.theNewTextLabel = [[[UILabel alloc] initWithFrame:textLabelRect] autorelease];
 		theNewTextLabel.tag = kTextLabelTag;
 		theNewTextLabel.backgroundColor = [UIColor clearColor];
 		[self.contentView addSubview:theNewTextLabel];

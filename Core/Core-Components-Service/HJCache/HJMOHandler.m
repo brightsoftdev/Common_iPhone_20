@@ -266,7 +266,6 @@
     NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	self.urlConn = urlConnection;
     [urlConnection release];
-	[urlConn release];
 	if (urlConn==nil) {
 		NSLog(@"HJMOHandler nil URLConnection for %@",url);
 		state=stateFailed;

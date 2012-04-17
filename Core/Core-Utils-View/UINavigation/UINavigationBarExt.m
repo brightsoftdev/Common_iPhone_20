@@ -71,7 +71,8 @@ NSString* GlobalGetNavBarBackground()
 }
 
 - (void)stopTimer
-{
+{    
+    /*
 	NSTimer* timer = [barBackgroundName	objectForKey:[self getBackgroundTimerKey]];	
 
 	if (timer != nil){
@@ -83,10 +84,12 @@ NSString* GlobalGetNavBarBackground()
 		[timer release];
 		timer = nil;		
 	}
+     */
 }
 
 - (void)startTimer
 {
+    /*
 	if (barBackgroundName == nil){
 		barBackgroundName = [[NSMutableDictionary alloc] init];
 	}
@@ -102,6 +105,7 @@ NSString* GlobalGetNavBarBackground()
 	else {
 		NSLog(@"Warning, timer alive when starting timer for bar");
 	}
+     */
 
 }
 

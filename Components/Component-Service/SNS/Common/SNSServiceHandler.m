@@ -148,7 +148,7 @@
 
 - (int)sendText:(NSString*)text snsRequest:(CommonSNSRequest*)snsRequest
 {
-    int result;
+    int result = 0;
     
 //    __block NSMutableDictionary *userInfo = nil;
     NSURL *url = [snsRequest getSendTextURL];    

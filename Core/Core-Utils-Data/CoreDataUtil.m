@@ -57,7 +57,7 @@ static CoreDataManager* _defaultDataManager;
 		dbWorkingQueue = NULL;
 	}
 	
-	PPDebug(@"Init CoreDataUtil, DB Name (%@)", dbName);	
+	PPDebug(@"Init CoreDataUtil, DB Name (%@)", self.dbName);	
 	return self;
 }
 
@@ -80,13 +80,14 @@ static CoreDataManager* _defaultDataManager;
 		[self managedObjectModel];
 	}
 	
-	PPDebug(@"Init CoreDataUtil, DB Name (%@)", dbName);
+	PPDebug(@"Init CoreDataUtil, DB Name (%@)", self.dbName);
 	return self;
 }
 
 - (id)initWithDBName:(NSString*)name dataModelName:(NSString*)dmName hasWorkingQueue:(BOOL)hasWorkingQueue sharePersisitentStore:(NSPersistentStoreCoordinator*)sharePersisitentStore
 {
 	NSString* queueName;
+    self.dbName = @"";
 	if (self = [super init]){
 		if (name){
 			self.dbName = name;
@@ -109,7 +110,7 @@ static CoreDataManager* _defaultDataManager;
 		}
 	}
 	
-	PPDebug(@"Init CoreDataUtil, DB Name (%@) & Working Queue (%@)", dbName, queueName);
+	PPDebug(@"Init CoreDataUtil, DB Name (%@) & Working Queue (%@)", self.dbName, queueName);
 	return self;
 }
 
