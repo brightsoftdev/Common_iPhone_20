@@ -55,7 +55,9 @@
 		CGRect tableFrame = frame;
 		tableFrame.size.height = [self getMaxTableHeight];
 		
-		self.tbView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStyleGrouped];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStyleGrouped];
+		self.tbView = tableView;
+        [tableView release];
 		self.tbView.delegate = self;
 		self.tbView.dataSource = self;
 		self.tbView.backgroundColor = [UIColor clearColor];
@@ -64,8 +66,6 @@
 		[self bringSubviewToFront:clearHistoryButton];
 		[self bringSubviewToFront:backButton];
 		
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 		
 		[self updateButtonFrame];
 	}
