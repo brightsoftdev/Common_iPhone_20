@@ -56,7 +56,8 @@
 	
 	// init path
 	NSString* bundlePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:bundleResourceFile];
-	NSString* appPath = [NSString stringWithFormat:@"%@/%@", appDir, bundleResourceFile];
+//	NSString* appPath = [NSString stringWithFormat:@"%@/%@", appDir, bundleResourceFile];
+    NSString *appPath = [appDir stringByAppendingPathComponent:bundleResourceFile];
 	    
 	// check if file exist to app directory
 	success = [fileManager fileExistsAtPath:appPath];

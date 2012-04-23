@@ -87,7 +87,8 @@
 
 -(void) managedObjFailed {
 	NSLog(@"moHandlerFailed %@",moHandler);
-	[image release];
+    [loadingWheel stopAnimating];
+	[image release];    
 	image = nil;
 }
 
