@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    VERIFY_OK = 0,
+    VERIFY_UNKNOWN = -1,
+    
+} TransactionVerifyResult;
+
 @interface StoreKitUtils : NSObject
 
-- (BOOL)verifyReceipt:(NSData*)receipt;
++ (TransactionVerifyResult)verifyReceipt:(NSString*)transactionReceipt;
 
 @end
