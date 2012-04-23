@@ -10,4 +10,6 @@
 
 @interface StoreKitUtils : NSObject
 
+- (BOOL)verifyReceipt:(NSData*)receipt;
+
 @end

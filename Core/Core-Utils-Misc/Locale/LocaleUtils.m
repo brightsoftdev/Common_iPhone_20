@@ -30,7 +30,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
     NSString *currentLanguage = [languages objectAtIndex:0];
-	NSLog(@"Language Code is %@", currentLanguage);	
+//	NSLog(@"Language Code is %@", currentLanguage);	
     return currentLanguage;
 }
 

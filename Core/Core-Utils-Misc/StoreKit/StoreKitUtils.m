@@ -10,4 +10,9 @@
 
 @implementation StoreKitUtils
 
+- (BOOL)verifyReceipt:(NSData*)transactionReceipt
+{
+    return YES;
+}
+
 @end
