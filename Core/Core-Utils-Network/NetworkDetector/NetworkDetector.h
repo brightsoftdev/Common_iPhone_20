@@ -18,9 +18,11 @@
 }
 
 @property(nonatomic, copy) NSString *errorMessage;
+@property(nonatomic, copy) NSString *errorTitle;
 @property(nonatomic, assign) NSTimeInterval interval;
 
 - (id)initWithErrorMsg:(NSString *)msg detectInterval:(NSTimeInterval) interval;
+- (id)initWithErrorTitle:(NSString *)title ErrorMsg:(NSString *)msg detectInterval:(NSTimeInterval) interval;
 - (void) start;
 - (void) stop;
 @end
