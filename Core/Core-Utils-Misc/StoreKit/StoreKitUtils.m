@@ -13,7 +13,7 @@
 #import "JSON.h"
 #import "PPDebug.h"
 
-#define IAP_TEST_SERVER
+//#define IAP_TEST_SERVER
 
 #ifdef IAP_TEST_SERVER
 #define VAILDATING_RECEIPTS_URL @"https://sandbox.itunes.apple.com/verifyReceipt"
