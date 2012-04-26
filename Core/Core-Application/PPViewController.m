@@ -16,7 +16,6 @@
 #import "TKAlertCenter.h"
 #import "UIImageUtil.h"
 
-//#import "PPSegmentControl.h"
 @implementation PPViewController
 
 @synthesize loadingView;
@@ -396,7 +395,6 @@
 	[self showBackgroundImage];
 	[self registerKeyboardNotification];
 
-//	[self test];
 	[super viewDidLoad];
 }
 
