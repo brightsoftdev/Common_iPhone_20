@@ -34,6 +34,11 @@
 	
 }
 
++ (BOOL) isIPAD
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+}
+
 + (BOOL)isOS5
 {
     NSString *ver = [[UIDevice currentDevice] systemVersion];

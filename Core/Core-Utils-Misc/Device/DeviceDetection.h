@@ -33,5 +33,6 @@ enum {
 + (BOOL) isOS4;
 + (BOOL) isOS5;
 + (BOOL) canSendSms;
++ (BOOL) isIPAD;
 
 @end
