@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MobClick.h"
 
 @interface MobClickUtils : NSObject
+
++ (int)getIntValueByKey:(NSString*)key defaultValue:(int)defaultValue;
++ (NSString*)getStringValueByKey:(NSString*)key defaultValue:(NSString*)defaultValue;
 
 @end
