@@ -414,6 +414,14 @@
 	self.alertView = nil;	
 }
 
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown;
+    else
+        return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+}
+
 - (void)dealloc
 {
 	[self releaseAddressBook];
