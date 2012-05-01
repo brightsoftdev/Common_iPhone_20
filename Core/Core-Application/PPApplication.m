@@ -391,7 +391,9 @@ if (nil != payload) {
     NSString* newVersion = [userDefaults objectForKey:KEY_APP_NEW_VERSION];
     NSString* appUrl = [userDefaults objectForKey:KEY_APP_NEW_VERSION_URL];
     NSString* newVersionInfo = [userDefaults objectForKey:KEY_APP_NEW_VERSION_INFO];
-    if (newVersion && appUrl){
+    if (newVersion && appUrl && 
+        [newVersion isEqualToString:currentVersion] == NO &&
+        [newVersion floatValue] > [currentVersion floatValue]){
         [self askToDownloadNewVersion:newVersion newVersionInfo:newVersionInfo newVersionUrl:appUrl];
         return;
     }    
