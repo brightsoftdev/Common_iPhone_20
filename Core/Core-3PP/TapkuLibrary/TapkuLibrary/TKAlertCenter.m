@@ -33,6 +33,14 @@
 #import "UIView+TKCategory.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define FRAME_OF_ALERT_VIEW_IPHONE CGRectMake(0, 0, 100, 100)
+#define FRAME_OF_ALERT_VIEW_IPAD CGRectMake(0, 0, 100*2, 100*2)
+#define FRAME_OF_ALERT_VIEW ([self isIPAD] ? (FRAME_OF_ALERT_VIEW_IPAD) : (FRAME_OF_ALERT_VIEW_IPHONE)) 
+
+#define FONT_OF_MESSAGE_IPHONE [UIFont boldSystemFontOfSize:14]
+#define FONT_OF_MESSAGE_IPAD [UIFont boldSystemFontOfSize:14*2]
+#define FONT_OF_MESSAGE ([self isIPAD] ? (FONT_OF_MESSAGE_IPAD) : (FONT_OF_MESSAGE_IPHONE)) 
+
 #pragma mark -
 @interface TKAlertView : UIView {
 	CGRect _messageRect;
@@ -43,15 +51,20 @@
 - (id) init;
 - (void) setMessageText:(NSString*)str;
 - (void) setImage:(UIImage*)image;
-
+- (BOOL) isIPAD;
 @end
 
 
 #pragma mark -
 @implementation TKAlertView
 
+- (BOOL) isIPAD
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+}
+
 - (id) init{
-	if(!(self = [super initWithFrame:CGRectMake(0, 0, 100, 100)])) return nil;
+	if(!(self = [super initWithFrame:FRAME_OF_ALERT_VIEW])) return nil;
 	_messageRect = CGRectInset(self.bounds, 10, 10);
 	self.backgroundColor = [UIColor clearColor];
 	return self;
@@ -67,7 +80,7 @@
 	[[UIColor colorWithWhite:0 alpha:0.8] set];
 	[UIView drawRoundRectangleInRect:rect withRadius:10];
 	[[UIColor whiteColor] set];
-	[_text drawInRect:_messageRect withFont:[UIFont boldSystemFontOfSize:14] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
+	[_text drawInRect:_messageRect withFont:FONT_OF_MESSAGE lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
 	
 	CGRect r = CGRectZero;
 	r.origin.y = 15;
@@ -79,8 +92,9 @@
 
 #pragma mark Setter Methods
 - (void) adjust{
-	
-	CGSize s = [_text sizeWithFont:[UIFont boldSystemFontOfSize:14] constrainedToSize:CGSizeMake(160,200) lineBreakMode:UILineBreakModeWordWrap];
+    
+	CGSize constrainedSize = [self isIPAD] ? CGSizeMake(160*2,200*2) : CGSizeMake(160,200);
+	CGSize s = [_text sizeWithFont:FONT_OF_MESSAGE constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
 	
 	float imageAdjustment = 0;
 	if (_image) {

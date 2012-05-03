@@ -15,6 +15,7 @@
 #import "StringUtil.h"
 #import "TKAlertCenter.h"
 #import "UIImageUtil.h"
+#import "PPDebug.h"
 
 @implementation PPViewController
 
@@ -273,6 +274,8 @@
 {
 	if (loadingView == nil){
 		self.loadingView = [[[TKLoadingView alloc] initWithTitle:@"" message:loadingText] autorelease];
+        PPDebug(@"text = %@", loadingText);
+        PPDebug(@"view center = (%f, %f)", self.view.bounds.size.width/2, self.view.bounds.size.height/2);
         loadingView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+10);
 		[self.view addSubview:loadingView];
 	}

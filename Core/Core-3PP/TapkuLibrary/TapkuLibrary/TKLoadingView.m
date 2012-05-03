@@ -33,8 +33,29 @@
 #import "UIView+TKCategory.h"
 
 
-#define WIDTH_MARGIN 20
-#define HEIGHT_MARGIN 20
+#define WIDTH_MARGIN_IPHONE 20
+#define WIDTH_MARGIN_IPAD (WIDTH_MARGIN_IPHONE*2)
+#define WIDTH_MARGIN ([self isIPAD] ? (WIDTH_MARGIN_IPAD) : (WIDTH_MARGIN_IPHONE))
+
+#define HEIGHT_MARGIN_IPHONE 20
+#define HEIGHT_MARGIN_IPAD (HEIGHT_MARGIN_IPHONE*2)
+#define HEIGHT_MARGIN ([self isIPAD] ? (HEIGHT_MARGIN_IPAD) : (HEIGHT_MARGIN_IPHONE))
+
+#define WIDTH_OF_LOADING_VIEW_IPHONE 280
+#define WIDTH_OF_LOADING_VIEW_IPAD (WIDTH_OF_LOADING_VIEW_IPHONE*2)
+#define WIDTH_OF_LOADING_VIEW ([self isIPAD] ? (WIDTH_OF_LOADING_VIEW_IPAD) : (WIDTH_OF_LOADING_VIEW_IPHONE))
+
+#define HEIGHT_OF_LOADING_VIEW_IPHONE 200
+#define HEIGHT_OF_LOADING_VIEW_IPAD (HEIGHT_OF_LOADING_VIEW_IPHONE*2)
+#define HEIGHT_OF_LOADING_VIEW ([self isIPAD] ? (HEIGHT_OF_LOADING_VIEW_IPAD) : (HEIGHT_OF_LOADING_VIEW_IPHONE))
+
+#define FONT_OF_TITLE_IPHONE [UIFont boldSystemFontOfSize:16]
+#define FONT_OF_TITLE_IPAD [UIFont boldSystemFontOfSize:16*2]
+#define FONT_OF_TITLE ([self isIPAD] ? (FONT_OF_TITLE_IPAD) : (FONT_OF_TITLE_IPHONE))
+
+#define FONT_OF_MESSAGE_IPHONE [UIFont systemFontOfSize:12]
+#define FONT_OF_MESSAGE_IPAD [UIFont systemFontOfSize:12*2]
+#define FONT_OF_MESSAGE ([self isIPAD] ? (FONT_OF_MESSAGE_IPAD) : (FONT_OF_MESSAGE_IPHONE))
 
 @interface TKLoadingView (PrivateMethods)
 - (CGSize) calculateHeightOfTextFromWidth:(NSString*)text font: (UIFont*)withFont width:(float)width linebreak:(UILineBreakMode)lineBreakMode;
@@ -44,16 +65,21 @@
 @implementation TKLoadingView
 @synthesize radius;
 
+- (BOOL) isIPAD
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+}
+
 - (id) initWithTitle:(NSString*)ttl message:(NSString*)msg{
-	if(!(self = [super initWithFrame:CGRectMake(0, 0, 280, 200)])) return nil;
+	if(!(self = [super initWithFrame:CGRectMake(0, 0, WIDTH_OF_LOADING_VIEW, HEIGHT_OF_LOADING_VIEW)])) return nil;
 		
     _title = [ttl copy];
     _message = [msg copy];
     _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _activity.transform = [self isIPAD] ? CGAffineTransformMakeScale(2.0, 2.0) : CGAffineTransformIdentity;
     [self addSubview:_activity];
     _hidden = YES;
     self.backgroundColor = [UIColor clearColor];
-    
 	
 	return self;
 }
@@ -67,12 +93,11 @@
 	if(_hidden) return;
 	int width, rWidth, rHeight, x;
 	
+	UIFont *titleFont = FONT_OF_TITLE;
+	UIFont *messageFont = FONT_OF_MESSAGE;
 	
-	UIFont *titleFont = [UIFont boldSystemFontOfSize:16];
-	UIFont *messageFont = [UIFont systemFontOfSize:12];
-	
-	CGSize s1 = [self calculateHeightOfTextFromWidth:_title font:titleFont width:200 linebreak:UILineBreakModeTailTruncation];
-	CGSize s2 = [self calculateHeightOfTextFromWidth:_message font:messageFont width:200 linebreak:UILineBreakModeCharacterWrap];
+	CGSize s1 = [self calculateHeightOfTextFromWidth:_title font:titleFont width:HEIGHT_OF_LOADING_VIEW linebreak:UILineBreakModeTailTruncation];
+	CGSize s2 = [self calculateHeightOfTextFromWidth:_message font:messageFont width:HEIGHT_OF_LOADING_VIEW linebreak:UILineBreakModeCharacterWrap];
 	
 	if([_title length] < 1) s1.height = 0;
 	if([_message length] < 1) s2.height = 0;
@@ -81,9 +106,9 @@
 	rHeight = (s1.height + s2.height + (HEIGHT_MARGIN*2) + 10 + _activity.frame.size.height);
 	rWidth = width = (s2.width > s1.width) ? (int) s2.width : (int) s1.width;
 	rWidth += WIDTH_MARGIN * 2;
-	x = (280 - rWidth) / 2;
+	x = (WIDTH_OF_LOADING_VIEW - rWidth) / 2;
 	
-	_activity.center = CGPointMake(280/2,HEIGHT_MARGIN + _activity.frame.size.height/2);
+	_activity.center = CGPointMake(WIDTH_OF_LOADING_VIEW/2,HEIGHT_MARGIN + _activity.frame.size.height/2);
 	
 	
 	//NSLog(@"DRAW RECT %d %f",rHeight,self.frame.size.height);
@@ -174,11 +199,11 @@
 - (void) adjustHeight{
 	
 	CGSize s1 = [self heightWithString:_title font:[UIFont boldSystemFontOfSize:16.0] 
-								 width:200.0 
+								 width:HEIGHT_OF_LOADING_VIEW 
 							 linebreak:UILineBreakModeTailTruncation];
 	
 	CGSize s2 = [self heightWithString:_message font:[UIFont systemFontOfSize:12.0] 
-								   width:200.0 
+								   width:HEIGHT_OF_LOADING_VIEW 
 							   linebreak:UILineBreakModeCharacterWrap];
 
 	CGRect r = self.frame;
