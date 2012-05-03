@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
+static NSInteger deviceModel = MODEL_UNKNOWN;
+
 @implementation DeviceDetection
 
 + (BOOL) isIPodTouch
@@ -36,7 +38,12 @@
 
 + (BOOL) isIPAD
 {
-    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+    if (deviceModel == MODEL_UNKNOWN) {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            deviceModel = MODEL_IPAD; 
+        }
+    }
+    return deviceModel == MODEL_IPAD;
 }
 
 + (BOOL)isOS5
