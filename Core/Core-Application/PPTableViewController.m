@@ -143,7 +143,7 @@
         return;
     
     if (refreshHeaderView == nil) {
-        self.refreshHeaderView = [[[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(8.0f, 0.0f - self.dataTableView.bounds.size.height, 304.0f, self.dataTableView.bounds.size.height)] autorelease];
+        self.refreshHeaderView = [[[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(/*8.0f*/self.dataTableView.frame.origin.x, 0.0f - self.dataTableView.bounds.size.height, /*304.0f,*/ self.dataTableView.bounds.size.width, self.dataTableView.bounds.size.height)] autorelease];
         refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
         refreshHeaderView.bottomBorderThickness = 1.0;
         [self.dataTableView addSubview:refreshHeaderView];

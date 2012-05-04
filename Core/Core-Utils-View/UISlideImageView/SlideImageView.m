@@ -9,7 +9,6 @@
 #import "SlideImageView.h"
 #import "HJObjManager.h"
 #import "PPApplication.h"
-#import "ImageName.h"
 
 #define DEFAULT_HEIGHT_OF_PAGE_CONTROL 20
 
@@ -48,7 +47,6 @@
     [_imageForPageStateHighted release];
     [super dealloc];
 }
-
 
 // images is a NSString array that contain a list of absoute path or absolute URL or bundle file name of the images.
 - (void)setImages:(NSArray*)images{
