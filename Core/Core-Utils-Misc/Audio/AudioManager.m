@@ -9,6 +9,7 @@
 #import "AudioManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "PPDebug.h"
 
 AudioManager* backgroundMusicManager;
 AudioManager* soundManager;
@@ -24,6 +25,8 @@ static AudioManager* globalGetAudioManager()
 @implementation AudioManager
 @synthesize backgroundMusicPlayer = _backgroundMusicPlayer;
 @synthesize sounds = _sounds;
+@synthesize isSoundOn = _isSoundOn;
+@synthesize isMusicOn = _isMusicOn;
 
 - (void)setBackGroundMusicWithName:(NSString*)aMusicName
 {
@@ -68,7 +71,7 @@ static AudioManager* globalGetAudioManager()
             OSStatus err = AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &soundId);
             [self.sounds addObject:[NSNumber numberWithInt:soundId]];
             if (err != kAudioServicesNoError) {
-                NSLog(@"Could not load %@, error code: %ld", soundURL, err);
+                PPDebug(@"<AudioManager>Could not load %@, error code: %ld", soundURL, err);
             }
         }
     }
@@ -99,9 +102,11 @@ static AudioManager* globalGetAudioManager()
 
 - (void)playSoundById:(NSInteger)aSoundIndex
 {
-    NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
-    SystemSoundID soundId = num.intValue;
-    AudioServicesPlaySystemSound(soundId);
+    if (self.isSoundOn) {
+        NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
+        SystemSoundID soundId = num.intValue;
+        AudioServicesPlaySystemSound(soundId);
+    }    
 }
 
 - (void)backgroundMusicStart
