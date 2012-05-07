@@ -52,6 +52,7 @@ static AudioManager* globalGetAudioManager()
 - (void)initSounds:(NSArray*)soundNames
 {
     SystemSoundID soundId;
+    self.isSoundOn = YES;
     for (NSString* soundName in soundNames) {
         NSString* name;
         NSString* type;
@@ -107,10 +108,11 @@ static AudioManager* globalGetAudioManager()
             PPDebug(@"<playSoundById> but sound index (%d) out of range", aSoundIndex);
             return;
         }
-        
+
         NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
         SystemSoundID soundId = num.intValue;
         AudioServicesPlaySystemSound(soundId);
+        PPDebug(@"<AudioManager>play sound-%d, systemId=%d", aSoundIndex, num.intValue);
     }    
 }
 
