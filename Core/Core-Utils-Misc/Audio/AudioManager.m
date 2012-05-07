@@ -103,6 +103,11 @@ static AudioManager* globalGetAudioManager()
 - (void)playSoundById:(NSInteger)aSoundIndex
 {
     if (self.isSoundOn) {
+        if (aSoundIndex < 0 || aSoundIndex >= [self.sounds count]){
+            PPDebug(@"<playSoundById> but sound index (%d) out of range", aSoundIndex);
+            return;
+        }
+        
         NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
         SystemSoundID soundId = num.intValue;
         AudioServicesPlaySystemSound(soundId);
