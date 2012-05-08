@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol UICustomPageControlDelegate <NSObject>
+
+@optional
+- (void)currentPageDidChange:(int)newPage;
+
+@end
+
 @interface UICustomPageControl : UIPageControl
 
-{
-    UIImage *imagePageStateNormal;
-    UIImage *imagePageStateHighted;
-}
+@property (nonatomic, assign) id<UICustomPageControlDelegate> delegate;
+- (void)setPageIndicatorImageForCurrentPage:(UIImage*)currentIndicatorImage 
+                          forNotCurrentPage:(UIImage*)notCurrentIndicatorImage;
 
-@property (nonatomic, retain)UIImage *imagePageStateNormal;
-@property (nonatomic, retain)UIImage *imagePageStateHighted;
 
 @end
