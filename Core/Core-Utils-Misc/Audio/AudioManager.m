@@ -9,6 +9,7 @@
 #import "AudioManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "PPDebug.h"
 
 AudioManager* backgroundMusicManager;
 AudioManager* soundManager;
@@ -24,6 +25,8 @@ static AudioManager* globalGetAudioManager()
 @implementation AudioManager
 @synthesize backgroundMusicPlayer = _backgroundMusicPlayer;
 @synthesize sounds = _sounds;
+@synthesize isSoundOn = _isSoundOn;
+@synthesize isMusicOn = _isMusicOn;
 
 - (void)setBackGroundMusicWithName:(NSString*)aMusicName
 {
@@ -49,6 +52,7 @@ static AudioManager* globalGetAudioManager()
 - (void)initSounds:(NSArray*)soundNames
 {
     SystemSoundID soundId;
+    self.isSoundOn = YES;
     for (NSString* soundName in soundNames) {
         NSString* name;
         NSString* type;
@@ -68,7 +72,7 @@ static AudioManager* globalGetAudioManager()
             OSStatus err = AudioServicesCreateSystemSoundID((CFURLRef)soundURL, &soundId);
             [self.sounds addObject:[NSNumber numberWithInt:soundId]];
             if (err != kAudioServicesNoError) {
-                NSLog(@"Could not load %@, error code: %ld", soundURL, err);
+                PPDebug(@"<AudioManager>Could not load %@, error code: %ld", soundURL, err);
             }
         }
     }
@@ -99,9 +103,17 @@ static AudioManager* globalGetAudioManager()
 
 - (void)playSoundById:(NSInteger)aSoundIndex
 {
-    NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
-    SystemSoundID soundId = num.intValue;
-    AudioServicesPlaySystemSound(soundId);
+    if (self.isSoundOn) {
+        if (aSoundIndex < 0 || aSoundIndex >= [self.sounds count]){
+            PPDebug(@"<playSoundById> but sound index (%d) out of range", aSoundIndex);
+            return;
+        }
+
+        NSNumber* num = [self.sounds objectAtIndex:aSoundIndex];
+        SystemSoundID soundId = num.intValue;
+        AudioServicesPlaySystemSound(soundId);
+        PPDebug(@"<AudioManager>play sound-%d, systemId=%d", aSoundIndex, num.intValue);
+    }    
 }
 
 - (void)backgroundMusicStart
@@ -129,5 +141,26 @@ static AudioManager* globalGetAudioManager()
 - (void)vibrate
 {
     AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+}
+#define SOUND_SWITCHER @"sound_switcher"
+#define MUSIC_SWITCHER @"music_switcher"
+- (void)saveSoundSettings
+{
+    NSNumber* soundSwitcher = [NSNumber numberWithBool:self.isSoundOn];
+    NSNumber* musicSwitcher = [NSNumber numberWithBool:self.isMusicOn];
+    [[NSUserDefaults standardUserDefaults] setObject:soundSwitcher forKey:SOUND_SWITCHER];
+    [[NSUserDefaults standardUserDefaults] setObject:musicSwitcher forKey:MUSIC_SWITCHER];
+}
+
+- (void)loadSoundSettings
+{
+    NSNumber* soundSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:SOUND_SWITCHER];
+    NSNumber* musicSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:MUSIC_SWITCHER];
+    if (soundSwitcher) {
+        self.isSoundOn = soundSwitcher.boolValue;
+    }
+    if (musicSwitcher) {
+        self.isMusicOn = musicSwitcher.boolValue;
+    }
 }
 @end
