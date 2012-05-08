@@ -18,6 +18,8 @@
 @property (assign, nonatomic) BOOL isSoundOn;
 @property (assign, nonatomic) BOOL isMusicOn;
 + (AudioManager*)defaultManager;
+- (void)saveSoundSettings;
+- (void)loadSoundSettings;
 //播放短音效的方法。使用前必须使用Initsound的方法把需要的短音效注册好。soundNams音效名的array,建议用wav。
 - (void)initSounds:(NSArray*)soundNames;
 - (void)playSoundById:(NSInteger)aSoundIndex;

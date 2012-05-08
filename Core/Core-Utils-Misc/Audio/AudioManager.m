@@ -142,4 +142,25 @@ static AudioManager* globalGetAudioManager()
 {
     AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
 }
+#define SOUND_SWITCHER @"sound_switcher"
+#define MUSIC_SWITCHER @"music_switcher"
+- (void)saveSoundSettings
+{
+    NSNumber* soundSwitcher = [NSNumber numberWithBool:self.isSoundOn];
+    NSNumber* musicSwitcher = [NSNumber numberWithBool:self.isMusicOn];
+    [[NSUserDefaults standardUserDefaults] setObject:soundSwitcher forKey:SOUND_SWITCHER];
+    [[NSUserDefaults standardUserDefaults] setObject:musicSwitcher forKey:MUSIC_SWITCHER];
+}
+
+- (void)loadSoundSettings
+{
+    NSNumber* soundSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:SOUND_SWITCHER];
+    NSNumber* musicSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:MUSIC_SWITCHER];
+    if (soundSwitcher) {
+        self.isSoundOn = soundSwitcher.boolValue;
+    }
+    if (musicSwitcher) {
+        self.isMusicOn = musicSwitcher.boolValue;
+    }
+}
 @end
