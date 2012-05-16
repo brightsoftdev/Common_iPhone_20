@@ -26,6 +26,7 @@
 - (void)vibrate;
 //下面是背景音乐播放的方法，目前功能暂时已注释掉，无法使用
 - (void)setBackGroundMusicWithName:(NSString*)aMusicName;
+- (void)setBackGroundMusicWithURL:(NSURL*)url;
 - (void)backgroundMusicStart;
 - (void)backgroundMusicPause;
 - (void)backgroundMusicContinue;

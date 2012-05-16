@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "PPDebug.h"
+#import "MusicItem.h"
 
 AudioManager* backgroundMusicManager;
 AudioManager* soundManager;
@@ -48,6 +49,13 @@ static AudioManager* globalGetAudioManager()
     }
     
 }
+
+- (void)setBackGroundMusicWithURL:(NSURL*)url
+{
+        [self.backgroundMusicPlayer initWithContentsOfURL:url error:nil];
+        self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
+}
+
 
 - (void)initSounds:(NSArray*)soundNames
 {
@@ -119,7 +127,7 @@ static AudioManager* globalGetAudioManager()
 - (void)backgroundMusicStart
 {
     //[self setBackGroundMusicWithName:@"sword.mp3"];
-    //[self.backgroundMusicPlayer play];
+    [self.backgroundMusicPlayer play];
     
 }
 
@@ -135,7 +143,7 @@ static AudioManager* globalGetAudioManager()
 
 - (void)backgroundMusicStop
 {
-    //[self.backgroundMusicPlayer stop];
+    [self.backgroundMusicPlayer stop];
 }
 
 - (void)vibrate
