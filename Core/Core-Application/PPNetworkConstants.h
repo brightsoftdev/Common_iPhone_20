@@ -8,3 +8,7 @@
 
 #define RET_CODE @"ret"
 #define RET_DATA @"dat"
+
+// Output Format
+#define FORMAT_JSON          1
+#define FORMAT_PB            2   // protocol buffer

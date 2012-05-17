@@ -131,8 +131,9 @@
 + (CommonNetworkOutput*)sendRequest:(NSString*)baseURL
                 constructURLHandler:(ConstructURLBlock)constructURLHandler
                     responseHandler:(PPNetworkResponseBlock)responseHandler
+                       outputFormat:(int)outputFormat
                              output:(CommonNetworkOutput*)output
-{    
+{
     if (baseURL == nil || constructURLHandler == NULL || responseHandler == NULL){
         PPDebug(@"<sendRequest> failure because baseURL = nil || constructURLHandler = NULL || responseHandler = NULL");
         return nil;
@@ -148,12 +149,12 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setAllowCompressedResponse:YES];
     [request setTimeOutSeconds:NETWORK_TIMEOUT];
-
+    
     int startTime = time(0);
     PPDebug(@"[SEND] URL=%@", [url description]);    
-
+    
     [request startSynchronous];
-
+    
     NSError *error = [request error];
     int statusCode = [request responseStatusCode];
     
@@ -173,24 +174,43 @@
         
         int endTime = time(0);
         PPDebug(@"[RECV] data statistic (len=%d bytes, latency=%d seconds, raw=%d bytes, real=%d bytes)", 
-              [text length], (endTime - startTime),
-              [[request rawResponseData] length], [[request responseData] length]);
+                [text length], (endTime - startTime),
+                [[request rawResponseData] length], [[request responseData] length]);
         
         PPDebug(@"[RECV] data = %@", [request responseString]);
         
-        NSDictionary* dataDict = [text JSONValue];
-        if (dataDict == nil){
-            output.resultCode = ERROR_CLIENT_PARSE_JSON;
-            return output;
+        if (outputFormat == FORMAT_PB){
+            responseHandler(nil, output);               
+            output.responseData = [request responseData];
         }
-        
-        output.resultCode = [[dataDict objectForKey:RET_CODE] intValue];
-        responseHandler(dataDict, output);
+        else{
+            NSDictionary* dataDict = [text JSONValue];
+            if (dataDict == nil){
+                output.resultCode = ERROR_CLIENT_PARSE_JSON;
+                return output;
+            }
+            
+            output.resultCode = [[dataDict objectForKey:RET_CODE] intValue];
+            responseHandler(dataDict, output);
+        }
         
         return output;
     }
     
     return output;
+}
+
+
++ (CommonNetworkOutput*)sendRequest:(NSString*)baseURL
+                constructURLHandler:(ConstructURLBlock)constructURLHandler
+                    responseHandler:(PPNetworkResponseBlock)responseHandler
+                             output:(CommonNetworkOutput*)output
+{    
+    return [PPNetworkRequest sendRequest:baseURL 
+                     constructURLHandler:constructURLHandler 
+                         responseHandler:responseHandler
+                            outputFormat:FORMAT_JSON 
+                                  output:output];
 }
 
 
