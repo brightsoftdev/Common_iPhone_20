@@ -17,6 +17,7 @@
 @property (retain, nonatomic) NSMutableArray* sounds;
 @property (assign, nonatomic) BOOL isSoundOn;
 @property (assign, nonatomic) BOOL isMusicOn;
+@property (assign, nonatomic) BOOL isBGMPrepared;
 + (AudioManager*)defaultManager;
 - (void)saveSoundSettings;
 - (void)loadSoundSettings;

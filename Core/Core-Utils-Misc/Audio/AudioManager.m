@@ -18,6 +18,7 @@ static AudioManager* globalGetAudioManager()
 {
     if (backgroundMusicManager == nil) {
         backgroundMusicManager = [[AudioManager alloc] init];
+        [backgroundMusicManager loadSoundSettings];
     }
     return backgroundMusicManager;
 }
@@ -27,6 +28,7 @@ static AudioManager* globalGetAudioManager()
 @synthesize sounds = _sounds;
 @synthesize isSoundOn = _isSoundOn;
 @synthesize isMusicOn = _isMusicOn;
+@synthesize isBGMPrepared = _isBGMPrepared;
 
 - (void)setBackGroundMusicWithName:(NSString*)aMusicName
 {
@@ -43,16 +45,24 @@ static AudioManager* globalGetAudioManager()
     }
     if (soundFilePath) {
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        [self.backgroundMusicPlayer initWithContentsOfURL:soundFileURL error:nil];
-        self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
-    }
+        NSError* error = nil;
+        [self.backgroundMusicPlayer initWithContentsOfURL:soundFileURL error:&error];
+        if (!error){
+            PPDebug(@"<AudioManager>Init audio player successfully, sound file %@", soundFilePath);
+            self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
+            [self.backgroundMusicPlayer prepareToPlay];
+             self.isBGMPrepared = YES;
+        }
+        else {
+            PPDebug(@"<AudioManager>Fail to init audio player with sound file%@, error = %@", soundFilePath, [error description]);
+        }
+            }
     
 }
 
 - (void)initSounds:(NSArray*)soundNames
 {
     SystemSoundID soundId;
-    self.isSoundOn = YES;
     for (NSString* soundName in soundNames) {
         NSString* name;
         NSString* type;
@@ -119,23 +129,43 @@ static AudioManager* globalGetAudioManager()
 - (void)backgroundMusicStart
 {
     //[self setBackGroundMusicWithName:@"sword.mp3"];
-    //[self.backgroundMusicPlayer play];
+    if (self.isBGMPrepared) {
+        [self.backgroundMusicPlayer play];
+    } else {
+        PPDebug(@"<AudioManager> Baground music has not prepared");
+    }
+    
     
 }
 
 - (void)backgroundMusicPause
 {
     //[self.backgroundMusicPlayer pause];
+    if (self.isBGMPrepared) {
+        [self.backgroundMusicPlayer pause];
+    } else {
+        PPDebug(@"<AudioManager> Baground music has not prepared");
+    }
 }
 
 - (void)backgroundMusicContinue
 {
     //[self.backgroundMusicPlayer play];
+    if (self.isBGMPrepared) {
+        [self.backgroundMusicPlayer play];
+    } else {
+        PPDebug(@"<AudioManager> Baground music has not prepared");
+    }
 }
 
 - (void)backgroundMusicStop
 {
     //[self.backgroundMusicPlayer stop];
+    if (self.isBGMPrepared) {
+        [self.backgroundMusicPlayer stop];
+    } else {
+        PPDebug(@"<AudioManager> Baground music has not prepared");
+    }
 }
 
 - (void)vibrate
@@ -158,9 +188,13 @@ static AudioManager* globalGetAudioManager()
     NSNumber* musicSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:MUSIC_SWITCHER];
     if (soundSwitcher) {
         self.isSoundOn = soundSwitcher.boolValue;
+    } else {
+        self.isSoundOn = YES;
     }
     if (musicSwitcher) {
         self.isMusicOn = musicSwitcher.boolValue;
+    } else {
+        self.isMusicOn = YES;
     }
 }
 @end
