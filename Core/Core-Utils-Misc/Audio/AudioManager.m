@@ -214,4 +214,14 @@ static AudioManager* globalGetAudioManager()
         self.isMusicOn = YES;
     }
 }
+
+- (void)setIsMusicOn:(BOOL)isMusicOn 
+{
+    _isMusicOn = isMusicOn;
+    if (isMusicOn) {
+        [self backgroundMusicStart];
+    } else {
+        [self backgroundMusicPause];
+    }
+}
 @end
