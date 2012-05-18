@@ -18,3 +18,10 @@
 #define SNS_QQ_WEIBO            @"QQ"
 #define SNS_FACEBOOK            @"Facebook"
 #define SNS_TWITTER             @"TWitter"
+
+#define TYPE_EMAIL     1
+#define TYPE_SINA      2
+#define TYPE_QQ        3
+#define TYPE_RENREN    4
+#define TYPE_FACEBOOK  5
+#define TYPE_TWITTER   6
