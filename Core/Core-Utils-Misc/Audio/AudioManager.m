@@ -44,6 +44,9 @@ static AudioManager* globalGetAudioManager()
     } else {
         soundFilePath = [[NSBundle mainBundle] pathForResource:aMusicName ofType:@"mp3"];
     }
+    if ([self.backgroundMusicPlayer isPlaying]) {
+        [self.backgroundMusicPlayer stop];
+    }
     if (soundFilePath) {
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         NSError* error = nil;
@@ -51,7 +54,7 @@ static AudioManager* globalGetAudioManager()
         if (!error){
             PPDebug(@"<AudioManager>Init audio player successfully, sound file %@", soundFilePath);
             self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
-            [self.backgroundMusicPlayer prepareToPlay];
+            [self.backgroundMusicPlayer play];
              self.isBGMPrepared = YES;
         }
         else {
