@@ -44,7 +44,7 @@ static AudioManager* globalGetAudioManager()
     } else {
         soundFilePath = [[NSBundle mainBundle] pathForResource:aMusicName ofType:@"mp3"];
     }
-    if ([self.backgroundMusicPlayer isPlaying]) {
+    if (_isBGMPrepared && [self.backgroundMusicPlayer isPlaying]) {
         [self.backgroundMusicPlayer stop];
     }
     if (soundFilePath) {
@@ -66,6 +66,12 @@ static AudioManager* globalGetAudioManager()
 
 - (void)setBackGroundMusicWithURL:(NSURL*)url
 {
+    if (_isBGMPrepared && [self.backgroundMusicPlayer isPlaying]) {
+        [self.backgroundMusicPlayer stop];
+    }
+    if (url == nil) {
+        return;
+    }
     NSError* error = nil;
     [self.backgroundMusicPlayer initWithContentsOfURL:url error:&error];
     if (!error){
@@ -150,7 +156,7 @@ static AudioManager* globalGetAudioManager()
 - (void)backgroundMusicStart
 {
     //[self setBackGroundMusicWithName:@"sword.mp3"];
-    if (self.isBGMPrepared) {
+    if (self.isBGMPrepared && _isMusicOn) {
         [self.backgroundMusicPlayer play];
     } else {
         PPDebug(@"<AudioManager> Baground music has not prepared");
@@ -171,7 +177,7 @@ static AudioManager* globalGetAudioManager()
 - (void)backgroundMusicContinue
 {
     //[self.backgroundMusicPlayer play];
-    if (self.isBGMPrepared) {
+    if (self.isBGMPrepared && _isMusicOn) {
         [self.backgroundMusicPlayer play];
     } else {
         PPDebug(@"<AudioManager> Baground music has not prepared");
@@ -226,5 +232,6 @@ static AudioManager* globalGetAudioManager()
     } else {
         [self backgroundMusicPause];
     }
+    [self saveSoundSettings];
 }
 @end
