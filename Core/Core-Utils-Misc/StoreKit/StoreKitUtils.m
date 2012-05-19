@@ -28,7 +28,7 @@
     TransactionVerifyResult verifyResult = VERIFY_UNKNOWN;
     
 	NSURL *verifyURL = [NSURL URLWithString:VAILDATING_RECEIPTS_URL];
-	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:verifyURL];
+	ASIHTTPRequest *request = [[[ASIHTTPRequest alloc] initWithURL:verifyURL] autorelease];
 	[request setRequestMethod: @"POST"];
 	[request addRequestHeader: @"Content-Type" value: @"application/json"];
     	
@@ -48,6 +48,7 @@
         
         NSString* result = [request responseString];
         NSDictionary* dict = [result JSONValue];
+
         if (dict == nil || [dict objectForKey:@"status"] == nil)
             return verifyResult;
         
