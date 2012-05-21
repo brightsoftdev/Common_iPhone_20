@@ -392,10 +392,17 @@ if (nil != payload) {
     NSString* appUrl = [userDefaults objectForKey:KEY_APP_NEW_VERSION_URL];
     NSString* newVersionInfo = [userDefaults objectForKey:KEY_APP_NEW_VERSION_INFO];
     if (newVersion && appUrl && 
-        [newVersion isEqualToString:currentVersion] == NO &&
-        [newVersion floatValue] > [currentVersion floatValue]){
-        [self askToDownloadNewVersion:newVersion newVersionInfo:newVersionInfo newVersionUrl:appUrl];
-        return;
+        [newVersion isEqualToString:currentVersion] == NO){        
+        if ([newVersion floatValue] > [currentVersion floatValue]){
+            [self askToDownloadNewVersion:newVersion
+                           newVersionInfo:newVersionInfo 
+                            newVersionUrl:appUrl];
+            return;
+        }
+        else{
+            // current version is the latest one, skip and return
+            return;
+        }
     }    
     
     if ([self hasCheckAppVersionToday]){
@@ -430,7 +437,8 @@ if (nil != payload) {
             NSString *releaseNotes = [releaseInfo objectForKey:@"releaseNotes"];
             NSLog(@"releaseInfo=%@", [releaseInfo description]);
             
-            if ([latestVersion isEqualToString:currentVersion] == NO){
+            if ([latestVersion isEqualToString:currentVersion] == NO &&
+                [latestVersion floatValue] > [currentVersion floatValue]){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     // save track view URL and new version to user defaults
@@ -442,6 +450,9 @@ if (nil != payload) {
                     
                     [self askToDownloadNewVersion:latestVersion newVersionInfo:releaseNotes newVersionUrl:trackViewUrl];
                 });
+            }
+            else{
+                // current version is the latest one, skip and return
             }
         }
     });
