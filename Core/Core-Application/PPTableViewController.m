@@ -10,6 +10,7 @@
 #import "UITableViewCellUtil.h"
 #import "ArrayOfCharacters.h"
 #import "LogUtil.h"
+#import "DeviceDetection.h"
 
 @implementation PPTableViewController
 
@@ -136,6 +137,7 @@
 }
 
 #pragma mark Table View Controller
+
 
 - (void)createRefreshHeaderView
 {

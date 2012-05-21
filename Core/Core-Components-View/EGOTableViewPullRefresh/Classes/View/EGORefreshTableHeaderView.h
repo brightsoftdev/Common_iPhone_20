@@ -58,6 +58,9 @@ typedef enum{
 - (void)setCurrentDate;
 - (void)setState:(EGOPullRefreshState)aState;
 - (void)setFontColor:(UIColor *)color;
+- (void)setLastUpdateLabelFont:(UIFont *)font;
+- (void)setStatusLabelFont:(UIFont *)font;
+
 - (void)setBackgroundImage:(UIImage *)image;
 
 @end

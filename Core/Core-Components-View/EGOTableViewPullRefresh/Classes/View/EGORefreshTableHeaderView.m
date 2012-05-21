@@ -26,6 +26,15 @@
 
 #import "EGORefreshTableHeaderView.h"
 #import "LocaleUtils.h"
+#import "DeviceDetection.h"
+
+#define STATUS_FONT_SIZE ([DeviceDetection isIPAD] ? 26 : 13)
+#define LAST_UPDATE_FONT_SIZE ([DeviceDetection isIPAD] ? 24 : 12)
+
+#define STATUS_HEIGHT ([DeviceDetection isIPAD] ? 40 : 20)
+#define LAST_UPDATE_HEIGHT ([DeviceDetection isIPAD] ? 40 : 20)
+#define STATUS_HEIGHT_DIFFER ([DeviceDetection isIPAD] ? 55 * 2 : 48)
+#define LAST_UPDATE_HEIGHT_DIFFER ([DeviceDetection isIPAD] ? 30 * 2 : 30)
 
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 #define BORDER_COLOR [UIColor colorWithRed:160.0/255.0 green:173.0/255.0 blue:182.0/255.0 alpha:1.0]
@@ -70,9 +79,9 @@ static NSDateFormatter *refreshFormatter;
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-		lastUpdatedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
+		lastUpdatedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - LAST_UPDATE_HEIGHT_DIFFER, self.frame.size.width, 20.0f)];
 		lastUpdatedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		lastUpdatedLabel.font = [UIFont systemFontOfSize:12.0f];
+		lastUpdatedLabel.font = [UIFont systemFontOfSize:LAST_UPDATE_FONT_SIZE];
 		lastUpdatedLabel.textColor = TEXT_COLOR;
 		lastUpdatedLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		lastUpdatedLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -82,9 +91,9 @@ static NSDateFormatter *refreshFormatter;
 		[lastUpdatedLabel release];
 
 		
-		statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
+		statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - STATUS_HEIGHT_DIFFER, self.frame.size.width, STATUS_HEIGHT)];
 		statusLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		statusLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+		statusLabel.font = [UIFont boldSystemFontOfSize:STATUS_FONT_SIZE];
 		statusLabel.textColor = TEXT_COLOR;
 		statusLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		statusLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -95,7 +104,12 @@ static NSDateFormatter *refreshFormatter;
 		[statusLabel release];
 		
 		arrowImage = [[CALayer alloc] init];
-		arrowImage.frame = CGRectMake(25.0f, frame.size.height - 65.0f, 30.0f, 55.0f);
+        if (![DeviceDetection isIPAD]) {
+            arrowImage.frame = CGRectMake(25.0f, frame.size.height - 65.0f, 30.0f, 55.0f);            
+        }else{
+            arrowImage.frame = CGRectMake(25.0f * 2, frame.size.height - 65.0f * 2, 30.0f * 2, 55.0f * 2);
+        }
+        
 		arrowImage.contentsGravity = kCAGravityResizeAspect;
 		arrowImage.contents = (id)[UIImage imageNamed:@"blueArrow.png"].CGImage;
 		[[self layer] addSublayer:arrowImage];
@@ -110,7 +124,12 @@ static NSDateFormatter *refreshFormatter;
 
         
 		activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		activityView.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
+        if ([DeviceDetection isIPAD]) {
+            activityView.frame = CGRectMake(25.0f * 2, frame.size.height - 38.0f * 2, 20.0f * 2, 20.0f * 2);
+            [activityView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        }else{
+            activityView.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
+        }
 		activityView.hidesWhenStopped = YES;
 		[self addSubview:activityView];
 		[activityView release];
@@ -163,6 +182,17 @@ static NSDateFormatter *refreshFormatter;
     [formatter setDateFormat:format];
     NSString *period = [formatter stringFromDate:date];
     return period;
+}
+
+
+- (void)setLastUpdateLabelFont:(UIFont *)font
+{
+    [lastUpdatedLabel setFont:font];
+}
+
+- (void)setStatusLabelFont:(UIFont *)font
+{
+        [statusLabel setFont:font];
 }
 
 - (void)setFontColor:(UIColor *)color
