@@ -114,6 +114,11 @@
 
 -(NSString*)readyFilePathForOid:(id)oid {
 	NSString* filename = [self filenameForOid:oid];
+    if ([filename length] == 0){
+        // add by Benson, to avoid return readyFilePath directly, otherwize it may cause DELETE ready file directory
+        return nil;
+    }
+    
 	NSString* path = [readyPath stringByAppendingString:filename];
 	return path;
 }
@@ -129,7 +134,7 @@
 	NSError* e=nil;
 	[[NSFileManager defaultManager] moveItemAtPath:loadingFilename toPath:readyFilename error:&e];
 	if (e) {
-		NSLog(@"HJMOFileCache failed to move loading file to ready file %@",readyFilename);
+		NSLog(@"HJMOFileCache failed to move loading file to ready file %@ error %@",readyFilename, [e description]);
 		return nil;
 	} else {
 		if (isCounting) {

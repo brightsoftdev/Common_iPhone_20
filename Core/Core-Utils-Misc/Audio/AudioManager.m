@@ -60,30 +60,37 @@ static AudioManager* globalGetAudioManager()
         else {
             PPDebug(@"<AudioManager>Fail to init audio player with sound file%@, error = %@", soundFilePath, [error description]);
         }
-            }
+    }
     
 }
 
-- (void)setBackGroundMusicWithURL:(NSURL*)url
+- (BOOL)setBackGroundMusicWithURL:(NSURL*)url
 {
     if (_isBGMPrepared && [self.backgroundMusicPlayer isPlaying]) {
         [self.backgroundMusicPlayer stop];
     }
     if (url == nil) {
-        return;
+        return NO;
     }
     NSError* error = nil;
+    if (_backgroundMusicPlayer == nil) {
+        _backgroundMusicPlayer = [[AVAudioPlayer alloc] init];
+    }
     [self.backgroundMusicPlayer initWithContentsOfURL:url error:&error];
     if (!error){
         PPDebug(@"<AudioManager>Init audio player successfully, sound file %@", url);
         self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
         [self.backgroundMusicPlayer prepareToPlay];
         self.isBGMPrepared = YES;
+        return YES;
     }
     else {
         PPDebug(@"<AudioManager>Fail to init audio player with sound file%@, error = %@", url, [error description]);
+        self.isBGMPrepared = NO;
+        _backgroundMusicPlayer = nil;
+        return NO;
     }
-
+    return NO;
 }
 
 
@@ -159,7 +166,7 @@ static AudioManager* globalGetAudioManager()
     if (self.isBGMPrepared && _isMusicOn) {
         [self.backgroundMusicPlayer play];
     } else {
-        PPDebug(@"<AudioManager> Baground music has not prepared");
+        PPDebug(@"<AudioManager> Background music has not prepared");
     }
     
 }
@@ -170,7 +177,7 @@ static AudioManager* globalGetAudioManager()
     if (self.isBGMPrepared) {
         [self.backgroundMusicPlayer pause];
     } else {
-        PPDebug(@"<AudioManager> Baground music has not prepared");
+        PPDebug(@"<AudioManager> Background music has not prepared");
     }
 }
 
@@ -180,7 +187,7 @@ static AudioManager* globalGetAudioManager()
     if (self.isBGMPrepared && _isMusicOn) {
         [self.backgroundMusicPlayer play];
     } else {
-        PPDebug(@"<AudioManager> Baground music has not prepared");
+        PPDebug(@"<AudioManager> Background music has not prepared");
     }
 }
 
@@ -190,7 +197,7 @@ static AudioManager* globalGetAudioManager()
     if (self.isBGMPrepared) {
         [self.backgroundMusicPlayer stop];
     } else {
-        PPDebug(@"<AudioManager> Baground music has not prepared");
+        PPDebug(@"<AudioManager> Background music has not prepared");
     }
 }
 
