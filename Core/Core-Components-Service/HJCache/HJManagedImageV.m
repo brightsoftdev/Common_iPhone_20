@@ -42,7 +42,8 @@
 	[self clear];
 	self.callbackOnCancel=nil;
 	self.callbackOnSetImage=nil;
-	self.loadingWheel=nil;
+    
+    [loadingWheel release];
     [super dealloc];
 	//NSLog(@"ManagedImage dealloc");
 }

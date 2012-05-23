@@ -42,10 +42,21 @@
     return self;
 }
 
+- (void)clearImagesInCache
+{
+    for (UIView *view in scrollView.subviews) {
+        HJManagedImageV *imageView = (HJManagedImageV*)view;
+        [imageView clear];
+    }
+}
+
 -(void)dealloc
 {
+    [self clearImagesInCache];
     [scrollView release];
     [pageControl release];
+    [defaultImage release];
+
     [super dealloc];
 }
 
