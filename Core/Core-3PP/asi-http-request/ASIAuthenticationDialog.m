@@ -26,7 +26,10 @@ static const NSUInteger kDomainSection = 1;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-	return YES;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown;
+    else
+        return toInterfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 @end

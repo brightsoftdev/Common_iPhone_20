@@ -45,8 +45,12 @@
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return NO;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown;
+    else
+        return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
+
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
