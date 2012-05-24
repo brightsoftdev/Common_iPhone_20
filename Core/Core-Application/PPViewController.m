@@ -408,11 +408,23 @@
 }
 
 - (void)viewDidUnload
-{
-    self.alertView = nil;   // release alert view
-    
+{    
 	[self deregsiterKeyboardNotification];
     [self.blankView deregsiterKeyboardNotification];
+
+    self.alertView = nil;   // release alert view
+    self.loadingView = nil;
+    self.timer = nil;
+    self.backgroundImageName = nil;
+    self.locationManager = nil;
+    self.currentLocation = nil;
+    self.currentPlacemark = nil;
+    self.titlePPSegControl = nil;
+    self.titleSegControl = nil;
+    self.selectedImage = nil;
+    self.selectedImageSaveFileName = nil;
+    self.blankView = nil;        
+
 	[super viewDidUnload];
 }
 

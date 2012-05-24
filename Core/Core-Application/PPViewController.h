@@ -14,8 +14,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "TKLoadingView.h"
-//#import "PPSegmentControl.h"
 #import "UIBlankView.h"
+#import "PPDebug.h"
+
 #define kDefaultBarButton			@"barbutton.png"
 
 #define kLocationUpdateTimeOut		60.0
