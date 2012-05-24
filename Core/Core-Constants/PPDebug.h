@@ -8,3 +8,5 @@
 
 
 #import "LogUtil.h"
+
+#define PPRelease(x) ([x release]; x = nil;)
