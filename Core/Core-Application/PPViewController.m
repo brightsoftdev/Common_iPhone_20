@@ -87,7 +87,7 @@
 
 - (void)dismissAlertView:(id)sender
 {
-    NSLog(@"alert view retain count=%d", [alertView retainCount]);
+//    NSLog(@"alert view retain count=%d", [alertView retainCount]);
 	[self.alertView dismissWithClickedButtonIndex:0 animated:NO];
 }
 
@@ -275,8 +275,8 @@
 {
 	if (loadingView == nil){
 		self.loadingView = [[[TKLoadingView alloc] initWithTitle:@"" message:loadingText] autorelease];
-        PPDebug(@"text = %@", loadingText);
-        PPDebug(@"view center = (%f, %f)", self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+//        PPDebug(@"text = %@", loadingText);
+//        PPDebug(@"view center = (%f, %f)", self.view.bounds.size.width/2, self.view.bounds.size.height/2);
         if ([DeviceDetection isIPAD]) {
             loadingView.center = CGPointMake(384, 522);
         } else {

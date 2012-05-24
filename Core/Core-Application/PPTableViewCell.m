@@ -33,7 +33,7 @@
 
 - (void)dealloc
 {
-    [delegate release];
+//    [delegate release];
     [indexPath release];
 //    [tableViewController release];
     [super dealloc];
