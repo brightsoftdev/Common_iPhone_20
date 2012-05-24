@@ -13,6 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "HJObjManager.h"
+#import "PPDebug.h"
 
 #define kKeyDeviceToken				@"kPushDeviceToken"
 
