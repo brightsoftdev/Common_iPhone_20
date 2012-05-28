@@ -32,5 +32,7 @@
 - (void)backgroundMusicPause;
 - (void)backgroundMusicContinue;
 - (void)backgroundMusicStop;
+- (void)setBGMVolume:(float)volume;
+- (float)volume;
 
 @end

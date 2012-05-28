@@ -241,4 +241,19 @@ static AudioManager* globalGetAudioManager()
     }
     [self saveSoundSettings];
 }
+
+- (void)setBGMVolume:(float)volume
+{
+    if (volume >= 0 && volume <= 1) {
+        self.backgroundMusicPlayer.volume = volume;
+    } else {
+        PPDebug(@"<AudioManager> volume %.2f out of range! ", volume);
+    }
+}
+
+- (float)volume
+{
+    return self.backgroundMusicPlayer.volume;
+}
+
 @end
