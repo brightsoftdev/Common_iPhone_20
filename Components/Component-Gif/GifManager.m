@@ -43,7 +43,7 @@
     if ([gifFrameArray count] > 0) {
         firstImage = [gifFrameArray objectAtIndex:0];
     }
-    NSLog(@"gif frame count = %d", gifFrameArray.count);
+    PPDebug(@"gif frame count = %d", gifFrameArray.count);
     CGSize canvasSize = (firstImage ? firstImage.size : CGSizeZero);
     ANGifEncoder * encoder = [[ANGifEncoder alloc] initWithOutputFile:tempFile size:canvasSize globalColorTable:nil];
     ANGifNetscapeAppExtension * extension = [[ANGifNetscapeAppExtension alloc] init];
