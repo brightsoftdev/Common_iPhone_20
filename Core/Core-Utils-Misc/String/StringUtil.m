@@ -36,6 +36,13 @@ BOOL NSStringIsValidPhone(NSString *checkString)
 	return [test evaluateWithObject:checkString];
 }
 
+BOOL NSStringIsValidChinese(NSString *checkString)
+{
+	NSString* regex = @"[\u4e00-\u9fa5]+";
+	NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	return [test evaluateWithObject:checkString];
+}
+
 @implementation NSString (NSStringUtil)
 
 
