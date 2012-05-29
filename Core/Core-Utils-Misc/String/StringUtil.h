@@ -58,4 +58,5 @@
 
 extern BOOL NSStringIsValidEmail(NSString *checkString);
 extern BOOL NSStringIsValidPhone(NSString *checkString);
+extern BOOL NSStringIsValidChinese(NSString *checkString);
 extern NSString* pinyinStringFirstLetter(unsigned short hanzi);
