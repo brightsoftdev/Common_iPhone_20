@@ -27,6 +27,8 @@
         scrollView.pagingEnabled = YES;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.backgroundColor = [UIColor colorWithRed:207.0/255.0 green:207.0/255.0  blue:207.0/255.0  alpha:1];
+//        scrollView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0  blue:234.0/255.0  alpha:1];
         scrollView.delegate = self;
         
         [self addSubview:scrollView];
