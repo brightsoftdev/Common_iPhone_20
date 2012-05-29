@@ -61,6 +61,8 @@
        toPosition:(CGPoint)toPosition
          interval:(NSTimeInterval)interval 
          delegate:(id)delegate;
-+ (void)snowAnimationAtView:(UIView *)view;
 
++ (void)snowAnimationAtView:(UIView *)view image:(UIImage *)image;
++ (void)snowAnimationAtView:(UIView *)view;
++ (void)fireworksAnimationAtView:(UIView *)view;
 @end
