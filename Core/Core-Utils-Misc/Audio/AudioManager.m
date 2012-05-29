@@ -241,4 +241,25 @@ static AudioManager* globalGetAudioManager()
     }
     [self saveSoundSettings];
 }
+
+- (void)setBGMVolume:(float)volume
+{
+    if (volume >= 0 && volume <= 1 && self.backgroundMusicPlayer != nil) {
+        self.backgroundMusicPlayer.volume = volume;
+    } else {
+        PPDebug(@"<AudioManager> backgroundMusicPlayer not prepared or volume %.2f out of range! ", volume);
+    }
+}
+
+- (float)volume
+{
+    if (self.backgroundMusicPlayer != nil) {
+         return self.backgroundMusicPlayer.volume;
+    } else {
+        PPDebug(@"<AudioManager> Background music has not prepared");
+    }
+    return 0;
+   
+}
+
 @end
