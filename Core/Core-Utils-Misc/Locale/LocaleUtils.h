@@ -19,5 +19,6 @@
 + (BOOL)isChinese;
 
 + (BOOL)isChina;
++ (BOOL)isOtherChina;
 + (BOOL)isTraditionalChinese;
 @end
