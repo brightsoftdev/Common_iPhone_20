@@ -56,4 +56,17 @@
 	return NO;
 }
 
++ (BOOL)isOtherChina
+{
+	NSLocale *currentLocale = [NSLocale currentLocale];
+    
+	NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+	if ([countryCode isEqualToString:@"TW"] || 
+        [countryCode isEqualToString:@"HK"] || 
+        [countryCode isEqualToString:@"MO"])
+		return YES;	
+	
+	return NO;
+}
+
 @end
