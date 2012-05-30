@@ -30,6 +30,7 @@ static AudioManager* globalGetAudioManager()
 @synthesize isSoundOn = _isSoundOn;
 @synthesize isMusicOn = _isMusicOn;
 @synthesize isBGMPrepared = _isBGMPrepared;
+@synthesize volume = _volume;
 
 - (void)setBackGroundMusicWithName:(NSString*)aMusicName
 {
@@ -54,6 +55,7 @@ static AudioManager* globalGetAudioManager()
         if (!error){
             PPDebug(@"<AudioManager>Init audio player successfully, sound file %@", soundFilePath);
             self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
+            [self.backgroundMusicPlayer setVolume:self.volume];
             [self.backgroundMusicPlayer play];
              self.isBGMPrepared = YES;
         }
@@ -81,6 +83,7 @@ static AudioManager* globalGetAudioManager()
         PPDebug(@"<AudioManager>Init audio player successfully, sound file %@", url);
         self.backgroundMusicPlayer.numberOfLoops = -1; //infinite
         [self.backgroundMusicPlayer prepareToPlay];
+        [self.backgroundMusicPlayer setVolume:self.volume];
         self.isBGMPrepared = YES;
         return YES;
     }
@@ -207,18 +210,22 @@ static AudioManager* globalGetAudioManager()
 }
 #define SOUND_SWITCHER @"sound_switcher"
 #define MUSIC_SWITCHER @"music_switcher"
+#define MUSIC_VOLUME    @"music_volume"
 - (void)saveSoundSettings
 {
     NSNumber* soundSwitcher = [NSNumber numberWithBool:self.isSoundOn];
     NSNumber* musicSwitcher = [NSNumber numberWithBool:self.isMusicOn];
+    NSNumber* volume = [NSNumber numberWithFloat:self.volume];
     [[NSUserDefaults standardUserDefaults] setObject:soundSwitcher forKey:SOUND_SWITCHER];
     [[NSUserDefaults standardUserDefaults] setObject:musicSwitcher forKey:MUSIC_SWITCHER];
+    [[NSUserDefaults standardUserDefaults] setObject:volume forKey:MUSIC_VOLUME];
 }
 
 - (void)loadSoundSettings
 {
     NSNumber* soundSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:SOUND_SWITCHER];
     NSNumber* musicSwitcher = [[NSUserDefaults standardUserDefaults] objectForKey:MUSIC_SWITCHER];
+    NSNumber* volume = [[NSUserDefaults standardUserDefaults] objectForKey:MUSIC_VOLUME];
     if (soundSwitcher) {
         self.isSoundOn = soundSwitcher.boolValue;
     } else {
@@ -228,6 +235,11 @@ static AudioManager* globalGetAudioManager()
         self.isMusicOn = musicSwitcher.boolValue;
     } else {
         self.isMusicOn = YES;
+    }
+    if (volume) {
+        self.volume = volume.floatValue;
+    } else {
+        self.isMusicOn = 1;
     }
 }
 
@@ -242,24 +254,25 @@ static AudioManager* globalGetAudioManager()
     [self saveSoundSettings];
 }
 
-- (void)setBGMVolume:(float)volume
+- (void)setVolume:(float)volume
 {
-    if (volume >= 0 && volume <= 1 && self.backgroundMusicPlayer != nil) {
+    _volume = volume;
+    if (volume >= 0 && volume <= 1 && self.isBGMPrepared) {
         self.backgroundMusicPlayer.volume = volume;
     } else {
         PPDebug(@"<AudioManager> backgroundMusicPlayer not prepared or volume %.2f out of range! ", volume);
     }
 }
 
-- (float)volume
-{
-    if (self.backgroundMusicPlayer != nil) {
-         return self.backgroundMusicPlayer.volume;
-    } else {
-        PPDebug(@"<AudioManager> Background music has not prepared");
-    }
-    return 0;
-   
-}
+//- (float)volume
+//{
+//    if (self.backgroundMusicPlayer != nil && self.isBGMPrepared) {
+//         return self.backgroundMusicPlayer.volume;
+//    } else {
+//        PPDebug(@"<AudioManager> Background music has not prepared");
+//    }
+//    return 0;
+//   
+//}
 
 @end

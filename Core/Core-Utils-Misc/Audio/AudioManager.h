@@ -18,6 +18,7 @@
 @property (assign, nonatomic) BOOL isSoundOn;
 @property (assign, nonatomic) BOOL isMusicOn;
 @property (assign, nonatomic) BOOL isBGMPrepared;
+@property (assign, nonatomic) float volume;
 + (AudioManager*)defaultManager;
 - (void)saveSoundSettings;
 - (void)loadSoundSettings;
@@ -32,7 +33,6 @@
 - (void)backgroundMusicPause;
 - (void)backgroundMusicContinue;
 - (void)backgroundMusicStop;
-- (void)setBGMVolume:(float)volume;
-- (float)volume;
+
 
 @end
